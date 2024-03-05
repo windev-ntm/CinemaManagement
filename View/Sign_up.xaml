@@ -58,7 +58,7 @@
                     </Button>
 
                     <TextBlock Text="Already have an account?" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-                    <Button Content="Sign in" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,5,0,20" Width="100" Click="ShowLoginGrid"/>
+                    <Button Content="Sign in" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,5,0,20" Width="100" />
             </Grid>
             
         </Border>

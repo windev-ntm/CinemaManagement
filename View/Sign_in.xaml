@@ -55,7 +55,7 @@
                 </Button>
 
                 <TextBlock Text="Don't have an account?" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-                <Button Command="{Binding SignUpCommand}" Content="Sign Up" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,5,0,20" Width="100" Click="ShowSignUpGrid"/>
+                <Button Command="{Binding SignUpCommand}" Content="Sign Up" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,5,0,20" Width="100" />
             </Grid>
 
         </Border>

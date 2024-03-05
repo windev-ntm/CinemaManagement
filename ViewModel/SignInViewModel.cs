@@ -51,7 +51,7 @@ namespace CinemaManagement.ViewModel
 
         private void HandleSignUpButton()
         {
-            var signUp = new View.Sign_up;
+            //var signUp = new View.Sign_up();
 
         }
 

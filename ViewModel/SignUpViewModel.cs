@@ -3,6 +3,5 @@
     public class SignUpViewModel
     {
 
-        private
     }
 }
