@@ -19,6 +19,23 @@ namespace CinemaManagement.ViewModel
             user = new User();
             userService = new UserService();
             Gender = null;
+            GenderOptions = new List<string> { "Male", "Female", "Other" };
+        }
+
+
+        private List<string> _genderOptions;
+
+        public List<string> GenderOptions
+        {
+            get { return _genderOptions; }
+            set
+            {
+                if (_genderOptions != value)
+                {
+                    _genderOptions = value;
+                    OnPropertyChanged(nameof(GenderOptions));
+                }
+            }
         }
 
         public string Username
@@ -51,13 +68,14 @@ namespace CinemaManagement.ViewModel
         }
         public string Gender
         {
-            get => user.Gender;
+            get => user.Gender?.ToString(); // Chuyển đổi ComboBoxItem sang string nếu cần
             set
             {
                 user.Gender = value;
                 OnPropertyChanged(nameof(Gender));
             }
         }
+
         public string TextButton
         {
             get => "Sign Up";

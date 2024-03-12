@@ -77,7 +77,7 @@ namespace CinemaManagement.Services
                     return false;
                 }
 
-                MessageBox.Show(user.BirthDate.Value.ToString());
+                MessageBox.Show(user.Gender);
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 user.BirthDate = user.BirthDate.Value.ToUniversalTime();
