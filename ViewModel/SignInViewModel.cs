@@ -1,5 +1,7 @@
 ﻿using CinemaManagement.Entity;
+using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -12,11 +14,14 @@ namespace CinemaManagement.ViewModel
 
         private ICommand _signInCommand, _signUpCommand;
 
+        public string logoPath { get; set; }
+
 
         public SignInViewModel()
         {
             userEntity = new UserEntity();
-
+            logoPath = Directory.GetCurrentDirectory() + "\\logo.png";
+            Console.WriteLine(logoPath);
         }
 
         public ICommand SignUpCommand
