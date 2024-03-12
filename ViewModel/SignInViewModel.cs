@@ -2,6 +2,7 @@
 using CinemaManagement.Services;
 using CinemaManagement.View;
 using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 
@@ -14,6 +15,8 @@ namespace CinemaManagement.ViewModel
         private User user;
 
         private ICommand _signInCommand, _signUpCommand;
+
+        public string logoPath { get; set; }
 
 
         public SignInViewModel()
