@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace CinemaManagement.View
 {
@@ -10,7 +11,15 @@ namespace CinemaManagement.View
         public SignUp()
         {
             InitializeComponent();
+            DataContext = new CinemaManagement.ViewModel.SignUpViewModel();
         }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (DataContext != null)
+            {
 
+                ((dynamic)DataContext).Password = ((PasswordBox)sender).Password;
+            }
+        }
     }
 }
