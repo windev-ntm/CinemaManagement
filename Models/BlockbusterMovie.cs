@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CinemaManagement.Models;
+﻿namespace CinemaManagement.Models;
 
 public partial class BlockbusterMovie
 {

@@ -31,34 +31,84 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                     <TextBlock Text="Create an account" Grid.ColumnSpan="2" Grid.Row="0" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Margin="0,20,0,0"/>
 
-                    <TextBlock Text="Email:" Grid.Row="1" Margin="10,10,0,0"/>
-                    <TextBox Grid.Row="2" Grid.ColumnSpan="2" Margin="10" />
+                    <TextBlock Text="Username:" Grid.Row="1" Margin="10,10,0,0"/>
+
+                    <TextBox x:Name="UsernameText"  Grid.Row="2" Grid.ColumnSpan="2" Margin="10"
+                             Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                             Style="{StaticResource  textBoxInError}">
+                        <TextBox.Text>
+                            <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:UsernameRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
 
                     <TextBlock Text="Password:" Grid.Row="3" Margin="10,10,0,0"/>
-                    <PasswordBox Grid.Row="4" Grid.ColumnSpan="2" Margin="10" />
+                    <PasswordBox PasswordChanged="PasswordBox_PasswordChanged" Grid.Row="4" Grid.ColumnSpan="2" Margin="10" />
 
-                    <TextBlock Text="Confirm password:" Grid.Row="5" Margin="10,10,0,0"/>
-                    <PasswordBox Grid.Row="6" Grid.ColumnSpan="2" Margin="10" />
+               
+                <TextBlock Text="Gender:" Grid.Row="5" Margin="10,10,0,0"/>
+                <ComboBox Grid.Row="6" Grid.ColumnSpan="2" Margin="10"
+                          ItemsSource="{Binding GenderOptions}"
+                          SelectedValue="{Binding Gender, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                          Style="{StaticResource comboBoxInError}">
+                </ComboBox>
 
-                    <Button Content="Sign Up" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0" Width="100" Foreground="White" Padding="10" FontSize="14">
-                        <Button.Style>
-                            <Style TargetType="Button">
+
+                <TextBlock Text="Birth day:" Grid.Row="7" Margin="10,10,0,0"/>
+
+                <DatePicker x:Name="BirthDateText" Grid.Row="8" Grid.ColumnSpan="2" Margin="10"
+                            Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                             Style="{StaticResource  datePickerInError}">
+                        <DatePicker.SelectedDate>
+                            <Binding Path="BirthDate" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <local:DateValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
+
+
+                <Button Command="{Binding SignUpCommand}" Content="Sign Up" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0" Width="100" Foreground="White" Padding="10" FontSize="14">
+                    <Button.Style>
+
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
                             <Setter Property="Background" Value="Orange"/>
                             <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="DarkOrange"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Button.Style>
-                    </Button>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=UsernameText, Path=(Validation.HasError)}" Value="False"/>
+                                        <Condition Binding="{Binding ElementName=BirthDateText, Path=(Validation.HasError)}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
 
-                    <TextBlock Text="Already have an account?" Grid.Row="8" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0"/>
-                    <Button Content="Sign in" Grid.Row="9" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,5,0,20" Width="100" />
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+
+                <TextBlock Text="Already have an account?" Grid.Row="10" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+                <Button Command="{Binding SignInCommand}" Content="Sign in" Grid.Row="11" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,5,0,20" Width="100" />
             </Grid>
             
         </Border>

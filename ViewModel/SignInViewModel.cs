@@ -1,5 +1,6 @@
-﻿using CinemaManagement.Entity;
-using Microsoft.EntityFrameworkCore.Diagnostics.Internal;
+﻿using CinemaManagement.Models;
+using CinemaManagement.Services;
+using CinemaManagement.View;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
@@ -10,7 +11,8 @@ namespace CinemaManagement.ViewModel
 
     public class SignInViewModel : INotifyPropertyChanged
     {
-        private UserEntity userEntity;
+        private UserService userService;
+        private User user;
 
         private ICommand _signInCommand, _signUpCommand;
 
@@ -19,9 +21,8 @@ namespace CinemaManagement.ViewModel
 
         public SignInViewModel()
         {
-            userEntity = new UserEntity();
-            logoPath = Directory.GetCurrentDirectory() + "\\logo.png";
-            Console.WriteLine(logoPath);
+            user = new User();
+            userService = new UserService();
         }
 
         public ICommand SignUpCommand
@@ -51,35 +52,42 @@ namespace CinemaManagement.ViewModel
 
         private void HandleSignInButton()
         {
-            MessageBox.Show("Username:" + Username + "\n" + "Password: " + Password);
+            if (userService.SignIn(user.Username, user.Password))
+            {
+                MessageBox.Show("Sign in successfully");
+            }
         }
 
         private void HandleSignUpButton()
         {
-            //var signUp = new View.Sign_up();
+            SignUp signUp = new SignUp();
 
+            signUp.Show();
+
+            Application.Current.MainWindow.Close(); // Đối với cửa sổ chính của ứng dụng
+
+            Application.Current.MainWindow = signUp;
         }
 
 
         public string Username
         {
-            get { return userEntity.getUsername(); }
+            get => user.Username;
             set
             {
-                userEntity.setUsername(value);
+                user.Username = value;
                 OnPropertyChanged(nameof(Username));
             }
         }
         public string Password
         {
-            get { return userEntity.getPassword(); }
+            get => user.Password;
             set
             {
-                userEntity.setPassword(value);
+                user.Password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }
-
 
 
         public event PropertyChangedEventHandler PropertyChanged;

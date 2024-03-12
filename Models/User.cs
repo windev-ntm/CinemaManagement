@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace CinemaManagement.Models;
 
-namespace CinemaManagement.Models;
 
 public partial class User
 {
@@ -11,7 +9,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public DateOnly? BirthDate { get; set; }
+    public DateTime? BirthDate { get; set; }
 
     public string? Gender { get; set; }
 

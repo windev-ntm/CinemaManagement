@@ -36,12 +36,24 @@
                 <TextBlock Text="Welcome back!" Grid.ColumnSpan="2" Grid.Row="0" FontWeight="Bold" FontSize="24" HorizontalAlignment="Center" Margin="0,20,0,0"/>
 
                 <TextBlock  Text="Email:" Grid.Row="1" Margin="10,10,0,0"/>
-                <TextBox Text="{Binding Username , Mode=TwoWay}" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" />
+
+                <TextBox Grid.Row="2" Grid.ColumnSpan="2" Margin="10"
+                         Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                         Style="{StaticResource  textBoxInError}">
+                    <TextBox.Text>
+                        <Binding Path="Username" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:UsernameRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+
 
                 <TextBlock Text="Password:" Grid.Row="3" Margin="10,10,0,0"/>
                 <PasswordBox PasswordChanged="PasswordBox_PasswordChanged"  Grid.Row="4" Grid.ColumnSpan="2" Margin="10" />
 
-                <Button Command="{Binding SignInCommand}" Content="Sign in" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0" Width="100" Foreground="White" Padding="10" FontSize="14">
+                <Button  Command="{Binding SignInCommand}" Content="Sign in" Grid.Row="7" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,20,0,0" Width="100" Foreground="White" Padding="10" FontSize="14">
                     <Button.Style>
                         <Style TargetType="Button">
                             <Setter Property="Background" Value="Orange"/>
