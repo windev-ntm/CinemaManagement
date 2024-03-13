@@ -30,4 +30,5 @@ public partial class Movie
     public virtual ICollection<Screening> Screenings { get; set; } = new List<Screening>();
 
     public virtual ICollection<Genre> Genres { get; set; } = new List<Genre>();
+    public string? CertificationName { get; internal set; }
 }

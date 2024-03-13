@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\search.png" />
-    <None Remove="Assets\up-down-arrow.png" />
+    <None Remove="Resources\logo.png" />
+    <None Remove="Resources\search.png" />
+    <None Remove="Resources\star.png" />
+    <None Remove="Resources\up-down-arrow.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +32,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\search.png" />
-    <Resource Include="Assets\up-down-arrow.png" />
+    <Resource Include="Resources\logo.png" />
+    <Resource Include="Resources\search.png" />
+    <Resource Include="Resources\star.png" />
+    <Resource Include="Resources\up-down-arrow.png" />
   </ItemGroup>
 
 </Project>

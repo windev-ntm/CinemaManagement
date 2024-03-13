@@ -8,7 +8,26 @@ namespace CinemaManagement
 
         public List<Movie> GetMovies()
         {
-            return cinemaManagementContext.Movies.ToList();
+            var query = from movie in cinemaManagementContext.Movies
+                        join certification in cinemaManagementContext.MovieCertifications
+                        on movie.CertificationId equals certification.Id
+                        select new Movie
+                        {
+                            Id = movie.Id,
+                            Name = movie.Name,
+                            PublishedYear = movie.PublishedYear,
+                            Duration = movie.Duration,
+                            ImdbRating = movie.ImdbRating,
+                            CertificationId = movie.CertificationId,
+                            PosterImg = movie.PosterImg,
+                            Trailer = movie.Trailer,
+                            // Thêm các trường khác của Movie cần lấy
+
+                            // Thêm trường CertificationName từ bảng MovieCertification
+                            CertificationName = certification.Name
+                        };
+
+            return [.. query];
         }
 
         public List<Movie> GetMovieBySearch(string name, string sortBy, int sortDirection)
