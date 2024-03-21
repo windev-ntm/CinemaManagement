@@ -7,7 +7,12 @@
              xmlns:controls="using:Microsoft.UI.Xaml.Controls"
              StartupUri="View/home.xaml">
     <Application.Resources>
-         <ControlTemplate x:Key="validationTemplate">
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ui:ThemesDictionary Theme="Dark" />
+                    <ui:ControlsDictionary />
+                </ResourceDictionary.MergedDictionaries>
+        <ControlTemplate x:Key="validationTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Foreground="Red" FontSize="20" Text="!">
                     
@@ -34,22 +39,51 @@
 			</Style.Triggers>
 		</Style>
 
-        <Style x:Key="comboBoxInError" TargetType="ComboBox">
+		<Style x:Key="comboBoxInError" TargetType="ComboBox">
+			<Style.Triggers>
+				<Trigger Property="Validation.HasError" Value="True">
+					<Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={x:Static RelativeSource.Self}}" />
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+        <Style x:Key="GenreButtonStyle" TargetType="Button">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Background" Value="#DDDDDD"/>
             <Style.Triggers>
-                <Trigger Property="Validation.HasError" Value="True">
-                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={x:Static RelativeSource.Self}}" />
+                <Trigger Property="IsEnabled" Value="True">
+                    <Setter Property="Background" Value="#00CC00"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#99CCFF"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <ResourceDictionary x:Key="mah">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
-            </ResourceDictionary.MergedDictionaries>
+            <Style x:Key="OvalButtonStyle" TargetType="Button">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Grid>
+                                <Ellipse x:Name="ellipse" Fill="{TemplateBinding Background}" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="2"/>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="ellipse" Property="Stroke" Value="Red"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="ui:TextBox" x:Key="TextBoxStyle">
+                <Style.Triggers>
+                    <Trigger Property="IsFocused" Value="True">
+                        <Setter Property="Background" Value="LightBlue"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
-
 
     </Application.Resources>
 </Application>

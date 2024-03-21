@@ -9,6 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\filter.png" />
+    <None Remove="Resources\logo.png" />
+    <None Remove="Resources\search.png" />
+    <None Remove="Resources\star.png" />
+    <None Remove="Resources\up-down-arrow.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="MahApps.Metro" Version="2.4.10" />
@@ -21,10 +29,18 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls" Version="7.1.3" />
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.77" />
     <PackageReference Include="Npgsql" Version="8.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
     <PackageReference Include="WPF-UI" Version="3.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\filter.png" />
+    <Resource Include="Resources\logo.png" />
+    <Resource Include="Resources\search.png" />
+    <Resource Include="Resources\star.png" />
+    <Resource Include="Resources\up-down-arrow.png" />
   </ItemGroup>
 
 </Project>
