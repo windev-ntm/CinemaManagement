@@ -6,6 +6,12 @@ namespace CinemaManagement.ViewModel
     {
         private readonly Action<object> _execute;
         private readonly Predicate<object> _canExecute;
+        private Action visibilityChanged;
+
+        public RelayCommand(Action visibilityChanged)
+        {
+            this.visibilityChanged = visibilityChanged;
+        }
 
         public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
