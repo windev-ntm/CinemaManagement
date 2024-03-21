@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
         xmlns:local="clr-namespace:CinemaManagement.View" 
         xmlns:i="clr-namespace:Microsoft.VisualBasic;assembly=Microsoft.VisualBasic"
@@ -10,6 +11,7 @@
 
         mc:Ignorable="d" ResizeMode="NoResize"
         Title="Search" Height="750" Width="1000" Background="White">
+    
     <ScrollViewer VerticalScrollBarVisibility="Auto"  >
 
         <Grid>
@@ -80,7 +82,7 @@
             </Button>
             <Border BorderBrush="#CCCCCC" BorderThickness="2.5" CornerRadius="5" Margin="15,0,0,0">
 
-            <Button Command="{Binding SearchCommand}" FontSize="14"   Foreground="Black" Width="150" Height="30" Click="Button_Click">
+            <Button Command="{Binding SearchCommand}" FontSize="14"   Foreground="Black" Width="150" Height="30" >
                 <Button.Style>
                     <Style TargetType="Button">
                         <Setter Property="BorderThickness" Value="1"/>
@@ -123,13 +125,15 @@
                         <Setter Property="Margin" Value="0,0,0,5"/>
                         <Setter Property="BorderThickness" Value="0,0,0,1"/>
                         <Setter Property="BorderBrush" Value="LightGray"/>
+                        <EventSetter Event="MouseDoubleClick" Handler="ListViewItem_MouseDoubleClick"/>
                     </Style>
                 </ListView.ItemContainerStyle>
                 <f:Interaction.Triggers>
                         <f:EventTrigger EventName="SizeChanged">
                             <f:InvokeCommandAction Command="{Binding SizeChangedCommand}" />
                         </f:EventTrigger>
-                    </f:Interaction.Triggers>
+                </f:Interaction.Triggers>
+
 
                 <ListView.View>
                 <GridView>

@@ -9,8 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\demo.mp4" />
     <None Remove="Resources\filter.png" />
     <None Remove="Resources\logo.png" />
+    <None Remove="Resources\play.png" />
     <None Remove="Resources\search.png" />
     <None Remove="Resources\star.png" />
     <None Remove="Resources\up-down-arrow.png" />
@@ -34,8 +36,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Resources\demo.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\filter.png" />
     <Resource Include="Resources\logo.png" />
+    <Resource Include="Resources\play.png" />
     <Resource Include="Resources\search.png" />
     <Resource Include="Resources\star.png" />
     <Resource Include="Resources\up-down-arrow.png" />

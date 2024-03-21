@@ -14,7 +14,7 @@ namespace CinemaManagement.ViewModel
         private ICommand _signInCommand, _signUpCommand;
 
 
-        public SignUpViewModel()
+                public SignUpViewModel()
         {
             user = new User();
             userService = new UserService();

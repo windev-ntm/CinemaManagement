@@ -1,6 +1,7 @@
 ﻿using CinemaManagement.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 
 namespace CinemaManagement
 {
@@ -14,6 +15,7 @@ namespace CinemaManagement
             var result = await context.Movies
                         .Include(movie => movie.Genres)
                         .Include(movie => movie.Certification)
+                        .Include(movie => movie.PersonInMovies)
                         .ToListAsync();
             return result;
         }
@@ -161,6 +163,24 @@ namespace CinemaManagement
             List<Movie> movies = await GetMovieByFilter(name, sortBy, sortDirection, startYear, endYear, startDuration, endDuration, startRating, endRating, genreIds);
             var result = movies.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
             return result;
+        }
+
+        public List<string> GetDirectors(Movie movie)
+        {
+
+            List<string> personList = movie.PersonInMovies
+                                        .Where(p => p.Role == "Director")
+                                        .Select(p => cinemaManagementContext.People.FirstOrDefault(p1 => p1.Id == p.PersonId).Name)
+                                        .ToList();
+            return personList;
+        }
+        public List<string> GetActors(Movie movie)
+        {
+            List<string> personList = movie.PersonInMovies
+                                        .Where(p => p.Role == "Actor")
+                                        .Select(p => cinemaManagementContext.People.FirstOrDefault(p1 => p1.Id == p.PersonId).Name)
+                                        .ToList();
+            return personList;
         }
     }
 }

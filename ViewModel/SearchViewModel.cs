@@ -43,7 +43,7 @@ namespace CinemaManagement
 
         private async Task LoadData()
         {
-            List<Movie> movies = await movieService.GetMovies();
+            List<Movie> movies = await movieService.GetPaginatableMovies(1);
             foreach (Movie movie in movies)
             {
                 listFilm.Add(movie);
@@ -163,6 +163,15 @@ namespace CinemaManagement
             }
         }
 
+
+
+        public void ShowMovieDetail(Movie movie)
+        {
+            if (movie == null) return;
+
+            View.MovieDetail movieDetail = new View.MovieDetail(movie);
+            movieDetail.Show();
+        }
 
         private async Task HandleNextButton()
         {
