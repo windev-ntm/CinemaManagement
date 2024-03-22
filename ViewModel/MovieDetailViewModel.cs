@@ -2,6 +2,8 @@
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using Wpf.Ui.Input;
+using CinemaManagement.View;
 
 namespace CinemaManagement.ViewModel
 {
@@ -22,9 +24,21 @@ namespace CinemaManagement.ViewModel
 
         private ICommand _playButton;
         private ICommand _buyButton;
+        private ICommand _screeningSelected;
 
         private List<string> _actorList;
         private List<string> _directorList;
+
+        private string _selectedItem;
+        public string SelectedItem
+        {
+            get => _selectedItem;
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
 
         public List<string> DirectorList
         {
@@ -42,6 +56,28 @@ namespace CinemaManagement.ViewModel
         public List<Genre> GenreList
         {
             get => (List<Genre>)movie.Genres;
+        }
+
+
+        public ICommand ItemSelectedCommand
+        {
+            get
+            {
+                if (_screeningSelected == null)
+                {
+                    _screeningSelected = new RelayCommand<string>(param => HandleScreeningSelected(param));
+                }
+                return _screeningSelected;
+            }
+        }
+
+        private void HandleScreeningSelected(string SelectedItem1)
+        {
+            if (SelectedItem1 != null)
+            {
+                BuyTicketView buyTicketView = new BuyTicketView();
+                buyTicketView.Show();
+            }
         }
 
         public ICommand BuyButton

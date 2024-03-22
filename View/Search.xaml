@@ -31,7 +31,8 @@
             <TextBlock Text="Search: " Foreground="Black" Height="20" TextAlignment="Center" FontSize="14"/>
 
             <Border BorderBrush="#CCCCCC" BorderThickness="2.5" CornerRadius="5">
-                <ui:TextBox Text="{Binding SearchText }" PlaceholderText="Search" FontSize="14" Height="30" VerticalAlignment="Center" Width="350" Foreground="Black" Padding="2,5,0,0">
+                <ui:TextBox Text="{Binding SearchText }" PlaceholderText="Search" FontSize="14" Height="30" VerticalAlignment="Center"
+                            Width="350" Foreground="Black" Padding="2,5,0,0">
                 <TextBox.Style>
                     <Style TargetType="TextBox">
                         <Setter Property="BorderThickness" Value="0"/>

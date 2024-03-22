@@ -3,6 +3,7 @@ using System.Windows;
 using CinemaManagement.ViewModel;
 using static System.Net.Mime.MediaTypeNames;
 using System.Windows.Media;
+using ControlzEx.Standard;
 namespace CinemaManagement.View
 {
     /// <summary>
@@ -30,9 +31,27 @@ namespace CinemaManagement.View
             playButton.Visibility = Visibility.Visible;
             playButtonText.Visibility = Visibility.Visible;
         }
+
+
     }
 }
 /*            < ui:TextBlock Grid.ColumnSpan = "2" Grid.Column = "3" Grid.Row = "4" Grid.RowSpan = "4"
                            HorizontalAlignment = "Center" VerticalAlignment = "Top"
                            Text = "Buy ticket now" FontSize = "25" FontFamily = "Roboto"
                            Foreground = "White" Margin = "0,20,0,0" />*/
+
+/*
+            < ui:Button Command = "{Binding BuyButton}"
+                            Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="4" Grid.RowSpan="4"
+                           HorizontalAlignment="Center" VerticalAlignment="Top"
+                           FontSize="30" Background="#FF2E8B57" 
+                           Foreground="White" FontFamily="Roboto" BorderThickness="0"
+                           Height="70" Width="300"
+                           CornerRadius="17" 
+                           >
+                <ui:TextBlock Grid.ColumnSpan = "2" Grid.Column = "3" Grid.Row = "4" Grid.RowSpan = "4"
+                           HorizontalAlignment = "Center" VerticalAlignment = "Top"
+                           Text = "Buy ticket now" FontSize = "25" FontFamily = "Roboto"
+                           Foreground = "White" Margin = "0,0,0,0" />
+
+            </ ui:Button >*/

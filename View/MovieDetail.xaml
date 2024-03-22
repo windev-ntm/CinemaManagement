@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
 
         xmlns:local="clr-namespace:CinemaManagement.View"
         mc:Ignorable="d" Background="#2d2a2a"
-        Title="{Binding Name}" Height="1700" Width="1200">
+        Title="{Binding Name}" Height="900" Width="1200">
 
     <ScrollViewer VerticalScrollBarVisibility="Auto"  >
 
@@ -16,7 +17,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.9*" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="182*" />
@@ -102,17 +103,26 @@
                               />
 
             </StackPanel>
+
+
+
+            <ui:TextBlock Text="Genres" FontFamily="Roboto" Foreground="White" 
+              Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="4" Margin="25,0,0,0"
+                          VerticalAlignment="Center"
+              FontSize="18" FontWeight="Bold" />
             
-            
-            <ListBox ItemsSource="{Binding GenreList}" 
-                 Background="#1f1f1f" HorizontalAlignment="Left"
-                 Grid.ColumnSpan="3" Grid.Row="2" Width="Auto"
-                 ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0,0,0,0"
+            <ListBox ItemsSource="{Binding GenreList}" HorizontalAlignment="Left" Margin="10,0,0,0"
+                 Background="#1f1f1f"  d:ItemsSource="{d:SampleData ItemCount=6}"
+
+                 Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="5" Grid.RowSpan="4"
+
+                     Width="Auto"
+                 ScrollViewer.VerticalScrollBarVisibility="Hidden" 
                  >
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <!-- Sử dụng WrapPanel để wrap các phần tử theo chiều ngang -->
-                        <WrapPanel Width="600" Orientation="Horizontal" />
+                        <WrapPanel Width="380" Orientation="Horizontal" />
 
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
@@ -225,26 +235,92 @@
                 </ListBox>
             </StackPanel>
 
+            <ui:TextBlock Text="Film screening schedule" FontFamily="Roboto" Foreground="White" 
+                  TextAlignment="Center" VerticalAlignment="Top"
+                  Grid.ColumnSpan="3" Grid.Row="10" Margin="0,20,0,0"
+                  FontSize="30" FontWeight="Bold" />
 
+            <ListBox ItemsSource="{Binding ActorList}" SelectionMode="Single"
+                     SelectedItem="{Binding SelectedItem}"
+             Background="#1f1f1f" HorizontalAlignment="Center"
+             Grid.ColumnSpan="3" Grid.Row="11" Margin="0,20,0,0"
+             Width="Auto" d:ItemsSource="{d:SampleData ItemCount=9}"
+             ScrollViewer.VerticalScrollBarVisibility="Hidden" >
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <!-- Sử dụng WrapPanel để wrap các phần tử theo chiều ngang -->
+                        <WrapPanel Width="896" Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
 
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border x:Name="border"
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Margin="5"
+                    Background="#808080"
+                            Cursor="Hand">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#D3D3D3"/>
+                                            <!-- Màu xám nhạt -->
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
 
-            <ui:Button Command="{Binding BuyButton}"
-                            Grid.ColumnSpan="2" Grid.Column="3" Grid.Row="4" Grid.RowSpan="4"
-                           HorizontalAlignment="Center" VerticalAlignment="Top"
-                           FontSize="30" Background="#FF2E8B57" 
-                           Foreground="White" FontFamily="Roboto" BorderThickness="0"
-                           Height="70" Width="300"
-                           CornerRadius="17" 
-                           >
-                <ui:TextBlock Grid.ColumnSpan = "2" Grid.Column = "3" Grid.Row = "4" Grid.RowSpan = "4"
-                           HorizontalAlignment = "Center" VerticalAlignment = "Top"
-                           Text = "Buy ticket now" FontSize = "25" FontFamily = "Roboto"
-                           Foreground = "White" Margin = "0,0,0,0" />
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5" Margin="5" Background="Transparent">
+                            <StackPanel Orientation="Vertical" Margin="10" Width="105" Height="140">
+                                <!-- Tên của phòng chiếu -->
+                                <ui:TextBlock Text="Screening02" TextAlignment="Center"
+                                FontSize="16"/>
+                                <Separator  Grid.ColumnSpan="2" Grid.Row="5" Width="Auto"  
+                                Foreground="White" Margin="0,2,0,0" 
+                                />
+                                <ui:TextBlock Text="31/03/2023" FontSize="20" 
+                                  HorizontalAlignment="Center" 
+                                  FontWeight="Normal" Margin="0,10,0,0"/>
+                                <!-- Thời gian chiếu -->
+                                <ui:TextBlock Text="15:00" FontSize="27" 
+                                  HorizontalAlignment="Center"
+                                  FontWeight="Bold" Margin="0,5,0,0"/>
 
-            </ui:Button>
-            
+                                <Separator  Grid.ColumnSpan="2" Grid.Row="5" Width="Auto"  
+                                Foreground="White" Margin="0,2,0,0"
+                                    />
+                                <!-- Số lượng ghế trống/ tổng số ghế -->
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                                    <ui:TextBlock Text="Seat: " FontWeight="Normal" FontSize="14" VerticalAlignment="Center"/>
+                                    <ui:TextBlock Text="97" FontWeight="Normal" FontSize="16" Foreground="WhiteSmoke" Margin="0,0,5,0"/>
+                                    <ui:TextBlock Text="/ " FontWeight="Normal"  FontSize="16" VerticalAlignment="Center"/>
+                                    <ui:TextBlock Text="100" FontWeight="Normal" FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
 
-
+                <!-- Bắt sự kiện khi click vào một item -->
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding DataContext.ItemSelectedCommand, 
+                                RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                                CommandParameter="{Binding SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </ListBox>
 
         </Grid>
     </ScrollViewer>

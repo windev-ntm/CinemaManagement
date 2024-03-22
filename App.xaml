@@ -5,7 +5,7 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-             StartupUri="View/home.xaml">
+             StartupUri="View/Search.xaml">
     <Application.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
@@ -83,6 +83,14 @@
                     </Trigger>
                 </Style.Triggers>
             </Style>
+
+
+            <ControlTemplate x:Key="templateOval" TargetType="Button">
+                <Grid>
+                    <Ellipse Fill="{TemplateBinding Property=Background}"/>
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Grid>
+            </ControlTemplate>
         </ResourceDictionary>
 
     </Application.Resources>
