@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaManagement.UserWpf", "CinemaManagement.UserWpf\CinemaManagement.UserWpf.csproj", "{F7651E94-062F-491C-A326-1928D963BA2E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaManagement.Data", "CinemaManagement.Data\CinemaManagement.Data.csproj", "{11A10176-23EF-4CFE-AB9A-D162B74ED6F1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaManagement.AdminWpf", "CinemaManagement.AdminWpf\CinemaManagement.AdminWpf.csproj", "{44AD965F-41FC-4F2F-AAE9-FE5CB8127B5C}"
@@ -18,10 +16,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F7651E94-062F-491C-A326-1928D963BA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7651E94-062F-491C-A326-1928D963BA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7651E94-062F-491C-A326-1928D963BA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7651E94-062F-491C-A326-1928D963BA2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{11A10176-23EF-4CFE-AB9A-D162B74ED6F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{11A10176-23EF-4CFE-AB9A-D162B74ED6F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11A10176-23EF-4CFE-AB9A-D162B74ED6F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
