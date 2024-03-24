@@ -16,17 +16,20 @@ namespace CinemaManagement.AdminWpf.Views.Windows
         public MainWindow(
             MainViewModel viewModel,
             IPageService pageService,
-            INavigationService navigationService
+            INavigationService navigationService,
+            IContentDialogService contentDialogService,
+            ISnackbarService snackbarService
         )
         {
-            DataContext = viewModel;
-
             SystemThemeWatcher.Watch(this);
 
-            InitializeComponent();
-            SetPageService(pageService);
+            DataContext = viewModel;
 
+            InitializeComponent();
+            snackbarService.SetSnackbarPresenter(SnackbarPresenter);
             navigationService.SetNavigationControl(RootNavigation);
+            contentDialogService.SetContentPresenter(RootContentDialog);
+            SetPageService(pageService);
         }
 
         #region INavigationWindow methods

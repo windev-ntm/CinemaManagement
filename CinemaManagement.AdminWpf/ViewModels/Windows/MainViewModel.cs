@@ -10,34 +10,6 @@ namespace CinemaManagement.AdminWpf.ViewModels.Windows
     public partial class MainViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string _applicationTitle = "Cinema management - Admin";
-
-        //[ObservableProperty]
-        //private ObservableCollection<INavigationViewItem> _menuItems =
-        //[
-        //    new NavigationViewItem()
-        //    {
-        //        Content = "Dashboard",
-        //        Icon = new SymbolIcon { Symbol = SymbolRegular.Board24 },
-        //        TargetPageType = typeof(DashboardViewModel),
-        //    },
-        //];
-
-        //[ObservableProperty]
-        //private ObservableCollection<INavigationViewItem> _footerMenuItems =
-        //[
-        //    new NavigationViewItem()
-        //    {
-        //        Content = "Settings",
-        //        Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
-        //        TargetPageType = typeof(SettingsViewModel),
-        //    }
-        //];
-
-        //[ObservableProperty]
-        //private ObservableCollection<MenuItem> _trayMenuItem =
-        //[
-        //    new MenuItem { Header = "Home", Tag = "tray_home" }
-        //];
+        private string _applicationTitle = "Cinema Management - Admin";
     }
 }

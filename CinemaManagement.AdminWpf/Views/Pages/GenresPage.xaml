@@ -15,103 +15,115 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <ui:DataGrid
-        AutoGenerateColumns="False"
-        CanUserReorderColumns="False"
-        CanUserResizeRows="False"
-        HeadersVisibility="Column"
-        IsReadOnly="True"
-        ItemsSource="{Binding Genres}">
-        <ui:DataGrid.ColumnHeaderStyle>
-            <Style BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}" TargetType="{x:Type DataGridColumnHeader}">
-                <Setter Property="Padding" Value="5" />
-                <!--#region Template copied from source-->
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
-                            <Grid>
+    <StackPanel Orientation="Vertical">
+        <ui:Button
+            Appearance="Primary"
+            Command="{Binding ShowCreateDialogCommand}"
+            Content="Add" />
+
+        <ui:TextBlock Margin="0,12,0,0" Text="{Binding TestText, Mode=OneWay}" />
+
+        <ui:DataGrid
+            Margin="0,12,0,0"
+            AutoGenerateColumns="False"
+            CanUserReorderColumns="False"
+            CanUserResizeRows="False"
+            GridLinesVisibility="Horizontal"
+            HeadersVisibility="Column"
+            IsReadOnly="True"
+            ItemsSource="{Binding Genres}">
+            <ui:DataGrid.ColumnHeaderStyle>
+                <Style BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}" TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Padding" Value="10" />
+                    <Setter Property="FontWeight" Value="SemiBold" />
+                    <Setter Property="Foreground" Value="{ui:ThemeResource TextFillColorPrimaryBrush}" />
+                    <Setter Property="Background" Value="{ui:ThemeResource ControlFillColorDefaultBrush}" />
+                    <Setter Property="SeparatorVisibility" Value="Collapsed" />
+                    <!--#region Template copied from source-->
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                                <Grid>
+                                    <Border
+                                        x:Name="columnHeaderBorder"
+                                        Padding="{TemplateBinding Padding}"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="0,0,0,2">
+                                        <ContentPresenter
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    </Border>
+                                    <Thumb
+                                        x:Name="PART_LeftHeaderGripper"
+                                        HorizontalAlignment="Left"
+                                        Style="{StaticResource ColumnHeaderGripperStyle}" />
+                                    <Thumb
+                                        x:Name="PART_RightHeaderGripper"
+                                        HorizontalAlignment="Right"
+                                        Style="{StaticResource ColumnHeaderGripperStyle}" />
+
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <!--#endregion Template copied from source-->
+                </Style>
+            </ui:DataGrid.ColumnHeaderStyle>
+
+            <ui:DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+                    <Setter Property="Padding" Value="10" />
+                    <!--#region Tempalte copied from source-->
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type DataGridCell}">
                                 <Border
-                                    x:Name="columnHeaderBorder"
+                                    x:Name="Border"
                                     Padding="{TemplateBinding Padding}"
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="0,0,1,1">
-                                    <ContentPresenter
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    SnapsToDevicePixels="True">
+                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="FocusStates">
+                                            <VisualState x:Name="Unfocused" />
+                                            <VisualState x:Name="Focused" />
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="CurrentStates">
+                                            <VisualState x:Name="Regular" />
+                                            <VisualState x:Name="Current">
+                                                <!--<Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="Red" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>-->
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
                                 </Border>
-                                <Thumb
-                                    x:Name="PART_LeftHeaderGripper"
-                                    HorizontalAlignment="Left"
-                                    Style="{StaticResource ColumnHeaderGripperStyle}" />
-                                <Thumb
-                                    x:Name="PART_RightHeaderGripper"
-                                    HorizontalAlignment="Right"
-                                    Style="{StaticResource ColumnHeaderGripperStyle}" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <!--#endregion Template copied from source-->
+                </Style>
+            </ui:DataGrid.CellStyle>
 
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <!--#endregion Template copied from source-->
-            </Style>
-        </ui:DataGrid.ColumnHeaderStyle>
+            <ui:DataGrid.Columns>
+                <DataGridTextColumn
+                    Width="50"
+                    Binding="{Binding Id}"
+                    Header="Id" />
+                <DataGridTextColumn
+                    Width="*"
+                    Binding="{Binding Name}"
+                    Header="Name" />
+            </ui:DataGrid.Columns>
+        </ui:DataGrid>
+    </StackPanel>
 
-        <ui:DataGrid.CellStyle>
-            <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
-                <Setter Property="Padding" Value="5" />
-                <!--#region Tempalte copied from source-->
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type DataGridCell}">
-                            <Border
-                                x:Name="Border"
-                                Padding="{TemplateBinding Padding}"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                Background="Transparent"
-                                BorderBrush="Transparent"
-                                BorderThickness="0"
-                                SnapsToDevicePixels="True">
-                                <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                <VisualStateManager.VisualStateGroups>
-                                    <VisualStateGroup x:Name="FocusStates">
-                                        <VisualState x:Name="Unfocused" />
-                                        <VisualState x:Name="Focused" />
-                                    </VisualStateGroup>
-                                    <VisualStateGroup x:Name="CurrentStates">
-                                        <VisualState x:Name="Regular" />
-                                        <VisualState x:Name="Current">
-
-
-                                            <Storyboard>
-                                                <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
-                                                    <EasingColorKeyFrame KeyTime="0" Value="Red" />
-                                                </ColorAnimationUsingKeyFrames>
-                                            </Storyboard>
-
-
-                                        </VisualState>
-                                    </VisualStateGroup>
-                                </VisualStateManager.VisualStateGroups>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <!--#endregion Template copied from source-->
-            </Style>
-        </ui:DataGrid.CellStyle>
-
-        <ui:DataGrid.Columns>
-            <DataGridTextColumn
-                Width="Auto"
-                Binding="{Binding Id}"
-                Header="Id" />
-            <DataGridTextColumn
-                Width="*"
-                Binding="{Binding Name}"
-                Header="Name" />
-        </ui:DataGrid.Columns>
-    </ui:DataGrid>
 </Page>

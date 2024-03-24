@@ -10,11 +10,12 @@ namespace CinemaManagement.AdminWpf.Views.Pages
 {
     public partial class SettingsPage : INavigableView<SettingsViewModel>
     {
-        public SettingsPage()
+        public SettingsViewModel ViewModel { get => (SettingsViewModel)DataContext; }
+
+        public SettingsPage(SettingsViewModel viewModel)
         {
+            DataContext = viewModel;
             InitializeComponent();
         }
-
-        public SettingsViewModel ViewModel => (SettingsViewModel)DataContext;
     }
 }

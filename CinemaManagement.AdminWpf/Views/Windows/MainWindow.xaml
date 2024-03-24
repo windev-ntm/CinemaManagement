@@ -5,14 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:CinemaManagement.AdminWpf.ViewModels.Windows"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:pageVMs="clr-namespace:CinemaManagement.AdminWpf.ViewModels.Pages"
     xmlns:pages="clr-namespace:CinemaManagement.AdminWpf.Views.Pages"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     Title="{Binding ApplicationTitle, Mode=OneWay}"
     Width="1100"
     Height="650"
-    d:DataContext="{d:DesignInstance local:MainViewModel,
-                                     IsDesignTimeCreatable=True}"
+    d:DataContext="{d:DesignInstance Type=local:MainViewModel,
+                                     IsDesignTimeCreatable=False}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -20,73 +19,55 @@
     ExtendsContentIntoTitleBar="True"
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     WindowBackdropType="Mica"
-    WindowCornerPreference="Round"
+    WindowCornerPreference="Default"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
         <ui:NavigationView
             x:Name="RootNavigation"
-            Grid.Row="1"
-            Padding="42"
-            FrameMargin="0"
-            IsBackButtonVisible="Collapsed"
+            Padding="42,0,42,32"
+            BreadcrumbBar="{Binding ElementName=BreadcrumbBar}"
+            FrameMargin="1"
+            IsBackButtonVisible="Visible"
             IsPaneToggleVisible="True"
-            PaneDisplayMode="LeftFluent">
-            <ui:NavigationView.Resources>
-                <DataTemplate DataType="{x:Type pageVMs:DashboardViewModel}">
-                    <pages:DashboardPage />
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type pageVMs:GenresViewModel}">
-                    <pages:GenresPage />
-                </DataTemplate>
+            OpenPaneLength="180"
+            PaneDisplayMode="Left"
+            TitleBar="{Binding ElementName=TitleBar}"
+            Transition="FadeInWithSlide">
+            <ui:NavigationView.Header>
+                <StackPanel Margin="42,32,42,20">
+                    <ui:BreadcrumbBar x:Name="BreadcrumbBar" />
+                </StackPanel>
+            </ui:NavigationView.Header>
 
-                <DataTemplate DataType="{x:Type pageVMs:SettingsViewModel}">
-                    <pages:SettingsPage />
-                </DataTemplate>
-            </ui:NavigationView.Resources>
             <ui:NavigationView.ContentOverlay>
                 <Grid>
                     <ui:SnackbarPresenter x:Name="SnackbarPresenter" />
                 </Grid>
             </ui:NavigationView.ContentOverlay>
+
             <ui:NavigationView.MenuItems>
-                <ui:NavigationViewItem TargetPageType="{x:Type pageVMs:DashboardViewModel}">
+                <ui:NavigationViewItem Content="Dashboard" TargetPageType="{x:Type pages:DashboardPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Grid24" />
                     </ui:NavigationViewItem.Icon>
-                    <ui:NavigationViewItem.Content>
-                        <ui:TextBlock FontSize="10.5" Text="Dashboard" />
-                    </ui:NavigationViewItem.Content>
                 </ui:NavigationViewItem>
-                <ui:NavigationViewItem TargetPageType="{x:Type pageVMs:GenresViewModel}">
+                <ui:NavigationViewItem Content="Genres" TargetPageType="{x:Type pages:GenresPage}">
                     <ui:NavigationViewItem.Icon>
-                        <ui:SymbolIcon Symbol="List24" />
+                        <ui:SymbolIcon Symbol="AppsList24" />
                     </ui:NavigationViewItem.Icon>
-                    <ui:NavigationViewItem.Content>
-                        <ui:TextBlock FontSize="10.5" Text="Genres" />
-                    </ui:NavigationViewItem.Content>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
+
             <ui:NavigationView.FooterMenuItems>
-                <ui:NavigationViewItem TargetPageType="{x:Type pageVMs:SettingsViewModel}">
+                <ui:NavigationViewItem Content="Settings" TargetPageType="{x:Type pages:SettingsPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="Settings24" />
                     </ui:NavigationViewItem.Icon>
-                    <ui:NavigationViewItem.Content>
-                        <ui:TextBlock FontSize="10.5" Text="Settings" />
-                    </ui:NavigationViewItem.Content>
                 </ui:NavigationViewItem>
             </ui:NavigationView.FooterMenuItems>
         </ui:NavigationView>
-
-        <ContentPresenter
-            x:Name="RootContentDialog"
-            Grid.Row="0"
-            Grid.RowSpan="2" />
 
         <ui:TitleBar
             x:Name="TitleBar"
@@ -97,5 +78,8 @@
                 <ui:ImageIcon Source="pack://application:,,,/Assets/wpfui-icon-256.png" />
             </ui:TitleBar.Icon>
         </ui:TitleBar>
+
+        <ContentPresenter x:Name="RootContentDialog" Grid.Row="0" />
     </Grid>
+
 </ui:FluentWindow>

@@ -45,10 +45,10 @@ public partial class CinemaManagementContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // TODO Secure the connection string
+        // TODO: Secure the connection string
         // But is this really necessary since we are connecting directly to the database anw?
         var config = ConfigurationManager.OpenExeConfiguration(Assembly.GetExecutingAssembly().Location);
-        optionsBuilder.UseNpgsql(config.ConnectionStrings.ConnectionStrings["CinemaManagmentDatabase"].ConnectionString);
+        optionsBuilder.UseNpgsql(config.ConnectionStrings.ConnectionStrings["CinemaManagementDatabase"].ConnectionString);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

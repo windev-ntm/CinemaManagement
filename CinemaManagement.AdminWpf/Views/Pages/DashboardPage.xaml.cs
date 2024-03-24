@@ -8,11 +8,13 @@ namespace CinemaManagement.AdminWpf.Views.Pages
     /// </summary>
     public partial class DashboardPage : INavigableView<DashboardViewModel>
     {
-        public DashboardPage()
+        public DashboardViewModel ViewModel { get => (DashboardViewModel)DataContext; }
+
+        public DashboardPage(DashboardViewModel viewModel)
         {
+            DataContext = viewModel;
+
             InitializeComponent();
         }
-
-        public DashboardViewModel ViewModel => (DashboardViewModel)DataContext;
     }
 }

@@ -3,15 +3,16 @@
 // Copyright (C) Leszek Pomianowski and WPF UI Contributors.
 // All Rights Reserved.
 
+using CinemaManagement.AdminWpf.Helpers;
 using CinemaManagement.AdminWpf.Services;
 using CinemaManagement.AdminWpf.ViewModels.Pages;
 using CinemaManagement.AdminWpf.ViewModels.Windows;
+using CinemaManagement.AdminWpf.Views.Pages;
 using CinemaManagement.AdminWpf.Views.Windows;
 using CinemaManagement.Data.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.IO;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Threading;
@@ -31,32 +32,43 @@ namespace CinemaManagement.AdminWpf
         // https://docs.microsoft.com/dotnet/core/extensions/logging
         private static readonly IHost _host = Host
             .CreateDefaultBuilder()
-            .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!); })
+            .ConfigureAppConfiguration(c => { c.SetBasePath(AppContext.BaseDirectory); })
+            //.ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(Assembly.GetEntryAssembly()!.Location)!); })
             .ConfigureServices((context, services) =>
             {
-                // Page resolver service
+                // WPF related services
                 services.AddSingleton<IPageService, PageService>();
-
-                // Theme manipulation
                 services.AddSingleton<IThemeService, ThemeService>();
-
-                // TaskBar manipulation
                 services.AddSingleton<ITaskBarService, TaskBarService>();
-
-                // Service containing navigation, same as INavigationWindow... but without window
                 services.AddSingleton<INavigationService, NavigationService>();
+                services.AddSingleton<IContentDialogService, ContentDialogService>();
+                services.AddSingleton<ISnackbarService, SnackbarService>();
+                services.AddSingleton<IViewProvider, ViewProvider>();
 
                 // Data services
                 services.AddSingleton<GenreService>();
 
                 // Main window with navigation
+                services.AddSingleton<MainViewModel>();
                 services.AddSingleton<MainWindow>();
 
-                // View models
-                services.AddSingleton<MainViewModel>();
-                services.AddSingleton<SettingsViewModel>();
+                // Top-level pages
                 services.AddSingleton<DashboardViewModel>();
+                services.AddSingleton<DashboardPage>();
                 services.AddSingleton<GenresViewModel>();
+                services.AddSingleton<GenresPage>();
+                services.AddSingleton<SettingsViewModel>();
+                services.AddSingleton<SettingsPage>();
+
+                // Other pages
+                services.AddTransientFromNamespace(
+                    "CinemaManagement.AdminWpf.ViewModels",
+                    Assembly.GetExecutingAssembly()
+                );
+                services.AddTransientFromNamespace(
+                    "CinemaManagement.AdminWpf.Views",
+                    Assembly.GetExecutingAssembly()
+                );
             }).Build();
 
         /// <summary>
@@ -64,16 +76,16 @@ namespace CinemaManagement.AdminWpf
         /// </summary>
         /// <typeparam name="T">Type of the service to get.</typeparam>
         /// <returns>Instance of the service or <see langword="null"/>.</returns>
-        public static T? GetService<T>()
+        public static T GetRequiredService<T>()
             where T : class
         {
-            return _host.Services.GetService(typeof(T)) as T;
+            return _host.Services.GetRequiredService<T>();
         }
 
         /// <summary>
         /// Occurs when the application is loading.
         /// </summary>
-        private async void OnStartup(object sender, StartupEventArgs e)
+        private void OnStartup(object sender, StartupEventArgs e)
         {
             _host.Start();
 
@@ -82,7 +94,7 @@ namespace CinemaManagement.AdminWpf
 
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
-            mainWindow.Navigate(typeof(DashboardViewModel));
+            mainWindow.Navigate(typeof(DashboardPage));
         }
 
         /// <summary>

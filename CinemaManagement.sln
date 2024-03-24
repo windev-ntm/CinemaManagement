@@ -10,6 +10,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CinemaManagement.AdminWpf",
 		{11A10176-23EF-4CFE-AB9A-D162B74ED6F1} = {11A10176-23EF-4CFE-AB9A-D162B74ED6F1}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0083192A-7CA5-49D8-94DA-A51B492E6AAA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
