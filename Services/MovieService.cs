@@ -207,6 +207,7 @@ namespace CinemaManagement
 
         public async Task<Invoice> BuyTicket(List<int> seatList,Screening screening,User user, int totalPrice,int price)
         {
+            Invoice result=null;
             await Task.Run(() =>
             {
 
@@ -248,16 +249,16 @@ namespace CinemaManagement
                         context.Tickets.Add(ticket);
                         context.SaveChanges();
                     }
-                    return invoice;
+                    result = invoice;
                 }
                 catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
-                    return null;
+                    return result;
                 }
-                return null;
+                return result;
             });
-            return null;
+            return result;
         }
         
 

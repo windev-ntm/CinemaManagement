@@ -1,7 +1,7 @@
 ﻿<Window x:Class="CinemaManagement.View.InvoiceView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Movie Theater Invoice" Height="350" Width="400"
+        Title="Movie Theater Invoice" Height="350" Width="500"
         Background="#2d2a2a" ResizeMode="NoResize">
     <Window.Resources>
         <!-- Style for the TextBlocks -->
@@ -47,7 +47,8 @@
             </StackPanel>
 
             <!-- Values -->
-            <StackPanel Grid.Column="1" Orientation="Vertical">
+            <StackPanel Grid.Column="1" Orientation="Vertical"
+                        HorizontalAlignment="Center">
                 <TextBlock Text="{Binding InvoiceId}"/>
                 <TextBlock Text="{Binding Username}"/>
                 <TextBlock Text="{Binding MovieName}"/>

@@ -1,6 +1,7 @@
 ﻿using CinemaManagement.Models;
 using CinemaManagement.Services;
 using CinemaManagement.View;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -19,7 +20,22 @@ namespace CinemaManagement.ViewModel
 {
     public class TicketInfo : INotifyPropertyChanged
     {
-        public int SeatNumber { get; set; }
+
+        private int _seatNumber;
+
+        public int SeatNumber
+        {
+
+            get
+            {
+                return _seatNumber;
+            }
+            set
+            {
+                _seatNumber = value;
+                OnPropertyChanged(nameof(SeatNumber));
+            }
+        }
 
         private bool _isSelected;
         private bool _isEnabled;
@@ -51,7 +67,7 @@ namespace CinemaManagement.ViewModel
         }
         public TicketInfo(int number,bool isSelected )
         {
-            SeatNumber = number;
+            _seatNumber = number;
             _isSelected = isSelected;
             if(isSelected==true)
             {
@@ -164,12 +180,8 @@ namespace CinemaManagement.ViewModel
     }
 
 
-
-
     public class Information
-    {
-
-         
+    { 
         public int InvoiceId { get; set; }
         public string Username { get; set; }
         public string MovieName { get; set; }
@@ -213,7 +225,6 @@ namespace CinemaManagement.ViewModel
         {
             this.movie = movie;
             this.user = user;
-            MessageBox.Show(user.Username + "   " + user.BirthDate);
             movieService = new MovieService();
             screeningService = new ScreeningService();
 
@@ -558,7 +569,7 @@ namespace CinemaManagement.ViewModel
 
             Total = SubTotal - Discount;
         }
-        private async Task HandleBuyButton()
+        private void HandleBuyButton()
         {
             List<int> allSelectedSeats = new List<int>();
 
@@ -570,27 +581,46 @@ namespace CinemaManagement.ViewModel
                 }
             }
             IsBuyButtonEnable = false;
-            Invoice invoice = await movieService.BuyTicket(allSelectedSeats, screening, user, (int)Total, (int)PricePerTicket);
+
+            HandleInformationInvoice(allSelectedSeats);
+
+        }
+        private async Task HandleInformationInvoice(List<int> allSelectedSeats)
+        {
+            Invoice invoice = await movieService.BuyTicket(allSelectedSeats, screening, user, (int) Total, (int) PricePerTicket);
             
             
             Screening screeningRefresh = await screeningService.GetScreeningById(screening.Id);
-            ScreeningInfo screeningInfoRefresh = new ScreeningInfo(screeningRefresh, screeningInfo.Duration);
-            screeningInfo = screeningInfoRefresh;
+        ScreeningInfo screeningInfoRefresh = new ScreeningInfo(screeningRefresh, screeningInfo.Duration);
+        screeningInfo = screeningInfoRefresh;
 
             InitComponents(screeningInfoRefresh);
 
-            IsBuyButtonEnable = true;
+        IsBuyButtonEnable = true;
             
-            string bookSeat="";
-            for(int i = 0; i < allSelectedSeats.Count; i++)
+            string bookSeat = "";
+            for(int i = 0; i<allSelectedSeats.Count; i++)
             {
                 bookSeat += allSelectedSeats[i] + " ";
             }
-
-            Information information = new Information(invoice.Id, user.Username, movie.Name, screeningInfo.Date, screeningInfo.StartTime, screeningInfo.ScreenName, bookSeat, SubTotal, Discount, Total);
+            /*if(invoice == null)
+            {
+                MessageBox.Show("Failed to buy ticket");
+                return;
+            }*/
+            int invoiceId = invoice.Id;
+            string username = user.Username;
+            string movieName = movie.Name;
+            string date = screeningInfo.Date;
+            string startTime = screeningInfo.StartTime;
+            string screeningName = screeningInfo.ScreenName;
+            double subTotal = SubTotal;
+            double discount = Discount;
+            double total = Total;
+            Information information = new Information(invoiceId, username, movieName, date, startTime, screeningName, bookSeat, subTotal, discount, total);
+        
             InvoiceView invoiceView = new InvoiceView(information);
-            invoiceView.ShowDialog();
-
+        invoiceView.ShowDialog();
         }
 
         public TicketInfo SelectedSeat

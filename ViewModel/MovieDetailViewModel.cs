@@ -216,7 +216,6 @@ namespace CinemaManagement.ViewModel
 
         private void HandleBuyButton()
         {
-            MessageBox.Show("Buy button clicked");
         }
 
         private void HandlePlayButton()
