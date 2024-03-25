@@ -3,13 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CinemaManagement.View"
+        xmlns:local="clr-namespace:CinemaManagement"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-
+        xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml" xmlns:viewmodel="clr-namespace:CinemaManagement.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:FilterSubScreenViewModel}"
         mc:Ignorable="d" Background="#2d2a2a" ResizeMode="NoResize"
-        Title="BuyTicketView" Height="800" Width="1000">
-    <Grid>
+        Title="BuyTicketView" Height="900" Width="1000">
+    <ScrollViewer VerticalScrollBarVisibility="Auto"  >
+
+        <Grid>
         <Grid.ColumnDefinitions>
             <!-- Định nghĩa cột -->
             <ColumnDefinition Width="*" />
@@ -18,7 +19,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <!-- Định nghĩa hàng -->
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="480" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -39,15 +40,16 @@
                    Background="Gray"
                    Width="500" Height="100"
                       >
-            <ui:TextBlock Text="Screen">
+            <ui:TextBlock Text="Screen" Foreground="White"
+                          FontWeight="Light">
                 
             </ui:TextBlock>
             
             
         </ui:Button>
 
-        <ListBox ItemsSource="{Binding}" SelectionMode="Multiple"
-                 SelectedItem="{Binding SelectedItem}"
+        <ListBox ItemsSource="{Binding SeatList, Mode=TwoWay}" SelectionMode="Multiple"
+                 local:ListBoxExtensions.SelectedItemList="{Binding SelectedSeats}"
                  Background="#1f1f1f" HorizontalAlignment="Center"
                  Grid.Column="1" Grid.Row="1" Margin="0,20,0,0"
                  Grid.ColumnSpan="2"
@@ -62,6 +64,8 @@
 
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
+                    <Setter Property="IsEnabled" Value="{Binding Path=IsEnabled, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListBoxItem">
@@ -80,7 +84,11 @@
                                         <!-- Màu xám nhạt -->
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="Green"/>
+                                        <Setter TargetName="border" Property="Background" Value="Orange"/>
+                                        <!-- Màu khi item được chọn -->
+                                    </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter TargetName="border" Property="Background" Value="Gray"/>
                                         <!-- Màu khi item được chọn -->
                                     </Trigger>
                                 </ControlTemplate.Triggers>
@@ -98,7 +106,7 @@
                                     VerticalAlignment="Center"
                                     Margin="7" Width="20" Height="20">
 
-                            <ui:TextBlock Text="100" FontSize="11" Margin="0,4,0,0"
+                        <ui:TextBlock Text="{Binding SeatNumber}" FontSize="11" Margin="0,4,0,0"
                                           HorizontalAlignment="Center"
                                           VerticalAlignment="Center"
                                           FontWeight="Bold" />
@@ -109,13 +117,82 @@
             <!-- Bắt sự kiện khi click vào một item -->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding DataContext.ItemSelectedCommand, 
+                    <i:InvokeCommandAction Command="{Binding DataContext.SeatSelectedCommand, 
                     RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                    CommandParameter="{Binding SelectedItem}"/>
+                    CommandParameter="{Binding SelectedSeat}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
 
+
+        <StackPanel Grid.Row="0" Grid.Column="0"
+                    Margin="0,10,0,0"
+                    Orientation="Vertical">
+
+            <StackPanel Orientation="Horizontal"
+                        Margin="20,0,0,0">
+                
+            <ui:TextBlock 
+            VerticalAlignment="Bottom"
+            Margin="0,0,20,0"
+            FontSize="20" Foreground="White"
+            FontWeight="Medium" Text="Time:"/>
+
+            <ui:TextBlock 
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,0"
+            FontSize="20" Foreground="White"
+            FontWeight="Normal" Text="{Binding StartTime}"/>
+                    <ui:TextBlock 
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,0"
+            FontSize="20" Foreground="White"
+            FontWeight="Normal" Text=" ~ "/>
+                    <ui:TextBlock 
+            VerticalAlignment="Bottom"
+            Margin="0,0,0,0"
+            FontSize="20" Foreground="White"
+            FontWeight="Normal" Text="{Binding EndTime}"/>
+                </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal"
+            Margin="20,0,0,0">
+
+                    <ui:TextBlock 
+                VerticalAlignment="Bottom"
+                Margin="0,0,20,0"
+                FontSize="20" Foreground="White"
+                FontWeight="Medium" Text="Room:"/>
+
+                   <ui:TextBlock 
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,0"
+                FontSize="20" Foreground="White"
+                FontWeight="Normal" Text="{Binding ScreeningName}"/>
+                   </StackPanel>
+
+
+                <StackPanel Orientation="Horizontal"
+            Margin="20,0,0,0">
+
+                    <ui:TextBlock 
+                VerticalAlignment="Bottom"
+                Margin="0,0,20,0"
+                FontSize="20" Foreground="White"
+                FontWeight="Medium" Text="Price:"/>
+
+                    <ui:TextBlock 
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,0"
+                FontSize="20" Foreground="Yellow"
+                FontWeight="Normal" Text="{Binding PricePerTicket}"/>
+                    <ui:TextBlock 
+                Margin="0,0,0,0" VerticalAlignment="Center"
+                FontSize="17" Foreground="White"
+                FontWeight="Normal" Text="/ ticket"/>
+                </StackPanel>
+            </StackPanel>
 
 
         <ui:TextBlock 
@@ -126,12 +203,13 @@
             FontWeight="Bold" Text="Voucher"/>
         
         <!--Voucher-->
-        <ListBox ItemsSource="{Binding}" SelectionMode="Multiple"
-         SelectedItem="{Binding SelectedItem}"
-         Background="#1f1f1f" HorizontalAlignment="Center"
-         Grid.Column="0" Grid.Row="1" Margin="20,10,0,0"
-         Width="Auto" d:ItemsSource="{d:SampleData ItemCount=10}"
-         ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+        <ListBox ItemsSource="{Binding VoucherList}" SelectionMode="Multiple"
+                 SelectedItem="{Binding SelectedVoucher}"
+                 Background="#1f1f1f" HorizontalAlignment="Center"
+                 Grid.Column="0" Grid.Row="1" Margin="20,10,0,0"
+                 Width="Auto" d:ItemsSource="{d:SampleData ItemCount=10}"
+                 
+                 ScrollViewer.HorizontalScrollBarVisibility="Hidden">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <!-- Sử dụng WrapPanel để wrap các phần tử theo chiều ngang -->
@@ -141,7 +219,10 @@
 
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
+                        <Setter Property="IsEnabled" Value="{Binding Path=IsEnabled, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding Mode=TwoWay, Path=IsSelected}"/>
+
+                        <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ListBoxItem">
                                 <Border x:Name="border"
@@ -149,7 +230,7 @@
                                 BorderThickness="1"
                                 CornerRadius="5"
                                 Margin="5"
-                                Background="Wheat"
+                                Background="#EE99C2"
                                         Cursor="Hand">
                                     <ContentPresenter/>
                                 </Border>
@@ -159,10 +240,14 @@
                                         <!-- Màu xám nhạt -->
                                     </Trigger>
                                     <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="border" Property="Background" Value="LightBlue"/>
+                                        <Setter TargetName="border" Property="Background" Value="Green"/>
                                         <!-- Màu khi item được chọn -->
                                     </Trigger>
-                                </ControlTemplate.Triggers>
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter TargetName="border" Property="Background" Value="#31363F"/>
+                                            <!-- Màu khi item được chọn -->
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
@@ -178,9 +263,9 @@
                             <Image  Stretch="UniformToFill" Width="Auto" Height="Auto"/>
 
                             <!-- Thông tin voucher -->
-                            <StackPanel Margin="10" VerticalAlignment="Center" Width="Auto" HorizontalAlignment="Right">
+                            <StackPanel Margin="10" VerticalAlignment="Center" Width="Auto" HorizontalAlignment="Center">
                                 <!-- Tiêu đề voucher -->
-                                <ui:TextBlock Text="Happy BirthDay Voucher" 
+                                <ui:TextBlock Text="{Binding Name}" 
                                               TextWrapping="Wrap"
                                               FontWeight="Bold" FontSize="16"/>
                                 <!-- Code voucher -->
@@ -190,21 +275,29 @@
                                     <ui:TextBlock Text="Code: " 
                                                   FontWeight="Bold" Margin="0,5,0,0"/>
                                     <ui:TextBlock 
-                                                Text="BIRTHDAY24" FontWeight="Normal" Margin="0,5,0,0"/>
+                                                Text="{Binding Code}" FontWeight="Normal" Margin="0,5,0,0"/>
 
                                 </StackPanel>
                                 <!-- Giá trị giảm giá hoặc ưu đãi -->
-                                <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Center"
-                                            
-                                            >
-                                    <ui:TextBlock Text="30" 
+                                    <ui:TextBlock Text="{Binding Amount}" 
                                                   FontSize="25"
-                                                  FontWeight="Bold" Margin="0,0,0,0"/>
-                                    <ui:TextBlock FontSize="25"
-                                                Text="%" FontWeight="Bold" Margin="0,0,0,0"/>
+                                                  FontWeight="Bold" Margin="0,0,0,0"
+                                                  HorizontalAlignment="Center"
+                                                  />
 
-                                </StackPanel>
+                                    <StackPanel Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                            >
+                                        <ui:TextBlock Text="Purchases over: " TextWrapping="Wrap" 
+                                                  FontSize="10" VerticalAlignment="Center"
+                                                  FontWeight="Normal" Margin="0,0,0,0"/>
+                                        <ui:TextBlock Text="{Binding MinSubtotal}" 
+                                                  FontSize="11"
+                                                  VerticalAlignment="Center"
+                                                  FontWeight="Medium" Margin="0,0,0,0"/>
+
+                                    </StackPanel>
 
                                 <!-- <StackPanel Orientation="Horizontal">
                                     <ui:TextBlock Text="Exp: " FontWeight="Normal" FontStyle="Italic" Margin="0,5,0,0"/> -->
@@ -224,9 +317,9 @@
             <!-- Bắt sự kiện khi click vào một item -->
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding DataContext.ItemSelectedCommand, 
-            RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-            CommandParameter="{Binding SelectedItem}"/>
+                    <i:InvokeCommandAction Command="{Binding DataContext.VoucherSelectedCommand, 
+                    RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
+                    CommandParameter="{Binding SelectedVoucher}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </ListBox>
@@ -251,7 +344,7 @@
             <ui:TextBlock 
             Grid.Column="2"
                 FontSize="20" Foreground="WhiteSmoke"
-            FontWeight="Medium" Text="2000000"
+            FontWeight="Medium" Text="{Binding SubTotal, Mode=TwoWay}"
             HorizontalAlignment="Right" />
         </Grid>
         <Grid Grid.Row="3" Grid.Column="0"
@@ -264,7 +357,7 @@
 
             <ui:TextBlock 
                     FontSize="20" Foreground="White"
-                    FontWeight="Bold" Text="Voucher: "
+                    FontWeight="Bold" Text="Discount: "
                     Margin="0,0,10,0"
                     HorizontalAlignment="Left" />
             <!-- Đặt TextBlock này sang trái -->
@@ -272,7 +365,7 @@
             <ui:TextBlock 
                     Grid.Column="2"
                         FontSize="20" Foreground="Green"
-                    FontWeight="Medium" Text="40000"
+                    FontWeight="Medium" Text="{Binding Discount, Mode=TwoWay}"
                     HorizontalAlignment="Right" />
         </Grid>
         <Separator  Grid.Row="4" Grid.Column="0"  
@@ -297,20 +390,21 @@
             <ui:TextBlock 
                 Grid.Column="2"
                 FontSize="20" Foreground="Red"
-                FontWeight="Bold" Text="2000000"
+                FontWeight="Bold" Text="{Binding Total, Mode=TwoWay}"
                 HorizontalAlignment="Right" />
         </Grid>
 
-        <ui:Button Command="{Binding BuyButton}"
-                    Grid.Row="2" Grid.Column="1" Grid.RowSpan="3"
+        <ui:Button Command="{Binding BuyButtonCommand}"
+                    Grid.Row="3" Grid.Column="1" Grid.RowSpan="3"
                    Margin="0,20,0,0"
                       HorizontalAlignment="Center"
-                      VerticalAlignment="Center"
+                      VerticalAlignment="Top"
                        Foreground="Black"
                       FontSize="20" FontWeight="Normal"
                       CornerRadius="10"
                    Background="Green"
                    Width="200" Height="50"
+                   IsEnabled="{Binding IsBuyButtonEnable}" 
                       >
             <ui:TextBlock Text="Buy Ticket"
                           Foreground="White"
@@ -318,6 +412,99 @@
                           >
             </ui:TextBlock>
         </ui:Button>
-    </Grid>
+
+
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="20,10,0,0">
+
+
+
+                <Border 
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Margin="5"
+                    Width="35" Height="35"
+                    Background="Wheat"
+                    Cursor="Hand">
+                    <StackPanel Orientation="Vertical" Background="Transparent"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="7" >
+
+                        <ui:TextBlock Text="{Binding SeatNumber}" FontSize="11" Margin="0,4,0,0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
+
+                <ui:TextBlock 
+                    FontSize="14" Foreground="White"
+                    FontWeight="Normal" Text="Selectable seat"
+                    VerticalAlignment="Center"
+                    Margin="0,0,50,0"
+                    HorizontalAlignment="Left" />
+
+                <Border 
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Margin="5"
+                    Width="35" Height="35"
+                    Background="Orange"
+                    Cursor="Hand">
+                    <StackPanel Orientation="Vertical" Background="Transparent"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="7" >
+
+                        <ui:TextBlock Text="{Binding SeatNumber}" FontSize="11" Margin="0,4,0,0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+                <ui:TextBlock 
+                    FontSize="14" Foreground="White"
+                    FontWeight="Normal" Text="Selected seat"
+                    VerticalAlignment="Center"
+                    Margin="0,0,50,0"
+                    HorizontalAlignment="Left" />
+                
+                <Border 
+                    BorderBrush="#CCCCCC"
+                    BorderThickness="1"
+                    CornerRadius="5"
+                    Margin="5"
+                    Width="35" Height="35"
+                    Background="Gray"
+                    Cursor="Hand">
+                    <StackPanel Orientation="Vertical" Background="Transparent"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="7" >
+
+                        <ui:TextBlock Text="{Binding SeatNumber}" FontSize="11" Margin="0,4,0,0"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+                <ui:TextBlock 
+                    FontSize="14" Foreground="White"
+                    FontWeight="Normal" Text="Purchased seat"
+                    VerticalAlignment="Center"
+                    Margin="0,0,10,0"
+                    HorizontalAlignment="Left" />
+            </StackPanel>
+
+
+        </Grid>
+    </ScrollViewer>
 
 </Window>

@@ -11,10 +11,9 @@ namespace CinemaManagement.View
     /// </summary>
     public partial class MovieDetail : Window
     {
-        public MovieDetail(Movie movie)
+        public MovieDetail()
         {
             InitializeComponent();
-            DataContext = new MovieDetailViewModel(movie);
         }
 
         private void PlayButton_Click(object sender, RoutedEventArgs e)

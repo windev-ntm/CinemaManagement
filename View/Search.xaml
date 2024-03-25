@@ -88,9 +88,8 @@
                     <Style TargetType="Button">
                         <Setter Property="BorderThickness" Value="1"/>
                         <Setter Property="Background" Value="Transparent"/>
-                            <Setter Property="BorderBrush" Value="Transparent"/>
-
-                        </Style>
+                        <Setter Property="BorderBrush" Value="Transparent"/>
+                    </Style>
                 </Button.Style>
                 <Image Source="/Resources/search.png" />
 

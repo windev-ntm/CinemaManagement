@@ -5,7 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CinemaManagement"
         mc:Ignorable="d"
+                xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+
         Title="Window1" Height="600" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Thêm ResourceDictionary cho theme dark -->
+                <ui:ThemesDictionary Theme="Light" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

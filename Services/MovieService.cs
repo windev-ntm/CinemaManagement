@@ -16,10 +16,27 @@ namespace CinemaManagement
                         .Include(movie => movie.Genres)
                         .Include(movie => movie.Certification)
                         .Include(movie => movie.PersonInMovies)
+                        .Include(movie => movie.Screenings)
+                                .ThenInclude(screening => screening.Screen)
+                        .Include(movie => movie.Screenings)
+                                .ThenInclude(screening => screening.Tickets)
                         .ToListAsync();
             return result;
         }
-
+        public async Task<Movie> GetMovieById(int id)
+        {
+            using var context = new CinemaManagementContext();
+            var result =  context.Movies
+                        .Include(movie => movie.Genres)
+                        .Include(movie => movie.Certification)
+                        .Include(movie => movie.PersonInMovies)
+                        .Include(movie => movie.Screenings)
+                                .ThenInclude(screening => screening.Screen)
+                        .Include(movie => movie.Screenings)
+                                .ThenInclude(screening => screening.Tickets)
+                        .FirstOrDefault(movie => movie.Id == id);
+            return result;
+        }
         public async Task<List<Movie>> GetMovieBySearch(string name, string sortBy, int sortDirection)
         {
             // Lấy danh sách phim từ nguồn dữ liệu (ví dụ: database, service, ...)
@@ -181,6 +198,74 @@ namespace CinemaManagement
                                         .Select(p => cinemaManagementContext.People.FirstOrDefault(p1 => p1.Id == p.PersonId).Name)
                                         .ToList();
             return personList;
+        }
+
+        public List<Screening> GetScreenings(Movie movie)
+        {
+            return movie.Screenings.ToList();
+        }
+
+        public async Task<Invoice> BuyTicket(List<int> seatList,Screening screening,User user, int totalPrice,int price)
+        {
+            await Task.Run(() =>
+            {
+
+                try
+                {
+                    using var context = new CinemaManagementContext();
+
+                    int userId = 1;
+                    if (user != null)
+                    {
+                        userId = user.Id;
+                    }
+
+
+                    int invoiceId = context.Invoices.Count() + 1;
+                    DateTime localTime = DateTime.Now; // Đây là thời gian địa phương
+
+                    Invoice invoice = new Invoice
+                    {
+                        Id = invoiceId,
+                        UserId = userId,
+                        TotalPrice = totalPrice,
+                        BoughtTime = localTime.ToUniversalTime(),
+                    };
+
+                    context.Invoices.Add(invoice);
+
+                    int ticketId = context.Tickets.Count();
+                    foreach (int seat in seatList)
+                    {
+                        Ticket ticket = new Ticket
+                        {
+                            Id = context.Tickets.Count()+1,
+                            InvoiceId = invoiceId,
+                            Seat = seat,
+                            ScreeningId = screening.Id,
+                            Price = price,
+                        };
+                        context.Tickets.Add(ticket);
+                        context.SaveChanges();
+                    }
+                    return invoice;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    return null;
+                }
+                return null;
+            });
+            return null;
+        }
+        
+
+        public async Task<List<Voucher>> GetVouchers()
+        {
+            using var context = cinemaManagementContext;
+            var result = await context.Vouchers.ToListAsync();
+            return result;
         }
     }
 }

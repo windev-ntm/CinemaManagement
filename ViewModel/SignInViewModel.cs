@@ -50,11 +50,20 @@ namespace CinemaManagement.ViewModel
             }
         }
 
-        private void HandleSignInButton()
+        private async Task HandleSignInButton()
         {
-            if (userService.SignIn(user.Username, user.Password))
+            user = await userService.SignIn(user.Username, user.Password);
+            if(user != null)
             {
-                MessageBox.Show("Sign in successfully");
+                Search search = new Search();
+                SearchViewModel searchViewModel = new SearchViewModel(user);
+                search.DataContext = searchViewModel;
+                if (search != null)
+                {
+                    search.Show();
+                    Application.Current.MainWindow.Close(); // Đối với cửa sổ chính của ứng dụng
+                    Application.Current.MainWindow = search;
+                }
             }
         }
 

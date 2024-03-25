@@ -240,10 +240,10 @@
                   Grid.ColumnSpan="3" Grid.Row="10" Margin="0,20,0,0"
                   FontSize="30" FontWeight="Bold" />
 
-            <ListBox ItemsSource="{Binding ActorList}" SelectionMode="Single"
-                     SelectedItem="{Binding SelectedItem}"
+            <ListBox ItemsSource="{Binding ScreeningList}" SelectionMode="Single"
+                     SelectedItem="{Binding SelectedScreening}"
              Background="#1f1f1f" HorizontalAlignment="Center"
-             Grid.ColumnSpan="3" Grid.Row="11" Margin="0,20,0,0"
+             Grid.ColumnSpan="3" Grid.Row="11" Margin="0,20,0,150"
              Width="Auto" d:ItemsSource="{d:SampleData ItemCount=9}"
              ScrollViewer.VerticalScrollBarVisibility="Hidden" >
                 <ListBox.ItemsPanel>
@@ -284,16 +284,25 @@
                         <Border BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="5" Margin="5" Background="Transparent">
                             <StackPanel Orientation="Vertical" Margin="10" Width="105" Height="140">
                                 <!-- Tên của phòng chiếu -->
-                                <ui:TextBlock Text="Screening02" TextAlignment="Center"
-                                FontSize="16"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            >
+                                    <ui:TextBlock Text="Screening" 
+                                                  TextAlignment="Center"
+                                                  FontSize="16"/>
+
+                                    <ui:TextBlock Text="{Binding ScreenName}" FontWeight="Normal" 
+                                                  FontSize="16" VerticalAlignment="Center"/>
+                                </StackPanel>
+
                                 <Separator  Grid.ColumnSpan="2" Grid.Row="5" Width="Auto"  
                                 Foreground="White" Margin="0,2,0,0" 
                                 />
-                                <ui:TextBlock Text="31/03/2023" FontSize="20" 
+                                <ui:TextBlock Text="{Binding Date}" FontSize="20" 
                                   HorizontalAlignment="Center" 
                                   FontWeight="Normal" Margin="0,10,0,0"/>
                                 <!-- Thời gian chiếu -->
-                                <ui:TextBlock Text="15:00" FontSize="27" 
+                                <ui:TextBlock Text="{Binding StartTime}" FontSize="27" 
                                   HorizontalAlignment="Center"
                                   FontWeight="Bold" Margin="0,5,0,0"/>
 
@@ -303,9 +312,9 @@
                                 <!-- Số lượng ghế trống/ tổng số ghế -->
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                     <ui:TextBlock Text="Seat: " FontWeight="Normal" FontSize="14" VerticalAlignment="Center"/>
-                                    <ui:TextBlock Text="97" FontWeight="Normal" FontSize="16" Foreground="WhiteSmoke" Margin="0,0,5,0"/>
+                                    <ui:TextBlock Text="{Binding RemainingSeat, Mode=TwoWay}" FontWeight="Normal" FontSize="16" Foreground="WhiteSmoke" Margin="0,0,5,0"/>
                                     <ui:TextBlock Text="/ " FontWeight="Normal"  FontSize="16" VerticalAlignment="Center"/>
-                                    <ui:TextBlock Text="100" FontWeight="Normal" FontSize="16" VerticalAlignment="Center"/>
+                                    <ui:TextBlock Text="{Binding TotalSeat}" FontWeight="Normal" FontSize="16" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -315,9 +324,9 @@
                 <!-- Bắt sự kiện khi click vào một item -->
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
-                        <i:InvokeCommandAction Command="{Binding DataContext.ItemSelectedCommand, 
+                        <i:InvokeCommandAction Command="{Binding DataContext.ScreeningSelectedCommand, 
                                 RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"
-                                CommandParameter="{Binding SelectedItem}"/>
+                                CommandParameter="{Binding SelectedScreening}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </ListBox>

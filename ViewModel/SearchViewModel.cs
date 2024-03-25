@@ -11,7 +11,7 @@ namespace CinemaManagement
     {
 
         private ObservableCollection<Movie> listFilm;
-
+        private User user;
         private MovieService movieService;
 
         private ICommand _sizeChangedCommand, _searchCommand, _sortDirectionCommand, _filterCommand;
@@ -26,8 +26,9 @@ namespace CinemaManagement
         private FilterSubScreenViewModel vm;
         private int _currentPage;
 
-        public SearchViewModel()
+        public SearchViewModel(User user)
         {
+            this.user = user;
             _currentPage = 1;
             _enableBackButton = true;
             _enableNextButton = true;
@@ -39,6 +40,7 @@ namespace CinemaManagement
 
             vm = new FilterSubScreenViewModel();
             LoadData();
+            this.user = user;
         }
 
         private async Task LoadData()
@@ -169,8 +171,14 @@ namespace CinemaManagement
         {
             if (movie == null) return;
 
-            View.MovieDetail movieDetail = new View.MovieDetail(movie);
-            movieDetail.Show();
+            MovieDetail movieDetail = new MovieDetail();
+            MovieDetailViewModel movieDetailViewModel = new MovieDetailViewModel(movie, user);
+            movieDetail.DataContext = movieDetailViewModel;
+            movieDetail.ShowDialog();
+
+
+
+            
         }
 
         private async Task HandleNextButton()

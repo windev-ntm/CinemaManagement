@@ -11,43 +11,39 @@ namespace CinemaManagement.Services
 
         static CinemaManagementContext cinemaManagementContext = new CinemaManagementContext();
 
-        public bool SignIn(string username, string password)
+        public async Task<User> SignIn(string username, string password)
         {
             try
             {
                 if (username == null || password == null)
                 {
                     MessageBox.Show("Username or password is empty");
-                    return false;
+                    return null ;
                 }
 
-                using (var db = cinemaManagementContext)
+                using (var db = new CinemaManagementContext())
                 {
                     var user = db.Users.FirstOrDefault(u => u.Username == username);
 
                     if (user == null)
                     {
                         MessageBox.Show("Username not found");
-                        return false;
+                        return null;
                     }
                     if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
                     {
                         MessageBox.Show("Password is incorrect");
-                        return false;
+                        return null;
                     }
-                    else
-                    {
-
-                    }
-                    return true;
+                    return user;
                 }
             }
             catch (System.Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
         public bool CreateUser(User user)
         {

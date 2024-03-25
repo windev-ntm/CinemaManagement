@@ -9,13 +9,10 @@ namespace CinemaManagement.View
     /// </summary>
     public partial class Search : Window
     {
-        SearchViewModel searchViewModel;
-
+        private SearchViewModel searchViewModel;
         public Search()
         {
             InitializeComponent();
-            searchViewModel = new CinemaManagement.SearchViewModel();
-            DataContext = searchViewModel;
         }
 
         private void ListViewItem_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -26,6 +23,7 @@ namespace CinemaManagement.View
                 // Lấy dữ liệu tương ứng với item được double-click
                 Movie selectedMovie = (Movie)((ListViewItem)sender).Content;
 
+                searchViewModel = DataContext as SearchViewModel;
                 searchViewModel.ShowMovieDetail(selectedMovie);
 
                 // Xử lý logic khi double-click vào một item trong ListView
