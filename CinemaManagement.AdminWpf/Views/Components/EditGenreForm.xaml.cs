@@ -4,13 +4,13 @@ using Wpf.Ui.Controls;
 namespace CinemaManagement.AdminWpf.Views.Components
 {
     /// <summary>
-    /// Interaction logic for AddGenreForm.xaml
+    /// Interaction logic for EditGenreForm.xaml
     /// </summary>
-    public partial class AddGenreForm : ContentDialog
+    public partial class EditGenreForm : ContentDialog
     {
-        public AddGenreFormViewModel ViewModel { get => (AddGenreFormViewModel)DataContext; }
+        public EditGenreFormViewModel ViewModel { get => (EditGenreFormViewModel)DataContext; }
 
-        public AddGenreForm(AddGenreFormViewModel viewModel)
+        public EditGenreForm(EditGenreFormViewModel viewModel)
         {
             DataContext = viewModel;
             InitializeComponent();
@@ -20,7 +20,7 @@ namespace CinemaManagement.AdminWpf.Views.Components
         {
             if (button == ContentDialogButton.Primary)
             {
-                ViewModel.CreateGenreCommand.Execute(null);
+                ViewModel.UpdateGenreCommand.Execute(null);
                 if (ViewModel.HasErrors) return;
             }
 

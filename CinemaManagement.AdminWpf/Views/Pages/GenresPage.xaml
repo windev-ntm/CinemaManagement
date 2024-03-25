@@ -6,8 +6,10 @@
     xmlns:local="clr-namespace:CinemaManagement.AdminWpf.ViewModels.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    x:Name="Root"
     Title="GenresPage"
-    d:DataContext="{d:DesignInstance Type=local:GenresViewModel}"
+    d:DataContext="{d:DesignInstance Type=local:GenresViewModel,
+                                     IsDesignTimeCreatable=False}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -18,16 +20,18 @@
     <StackPanel Orientation="Vertical">
         <ui:Button
             Appearance="Primary"
-            Command="{Binding ShowCreateDialogCommand}"
+            Command="{Binding OpenCreateDialogCommand}"
             Content="Add" />
 
-        <ui:TextBlock Margin="0,12,0,0" Text="{Binding TestText, Mode=OneWay}" />
 
         <ui:DataGrid
+            x:Name="GenresGrid"
             Margin="0,12,0,0"
+            d:ItemsSource="{d:SampleData}"
             AutoGenerateColumns="False"
             CanUserReorderColumns="False"
             CanUserResizeRows="False"
+            FrozenColumnCount="3"
             GridLinesVisibility="Horizontal"
             HeadersVisibility="Column"
             IsReadOnly="True"
@@ -75,6 +79,7 @@
             <ui:DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
                     <Setter Property="Padding" Value="10" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
                     <!--#region Tempalte copied from source-->
                     <Setter Property="Template">
                         <Setter.Value>
@@ -88,7 +93,7 @@
                                     BorderBrush="Transparent"
                                     BorderThickness="0"
                                     SnapsToDevicePixels="True">
-                                    <ContentPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="FocusStates">
                                             <VisualState x:Name="Unfocused" />
@@ -97,11 +102,11 @@
                                         <VisualStateGroup x:Name="CurrentStates">
                                             <VisualState x:Name="Regular" />
                                             <VisualState x:Name="Current">
-                                                <!--<Storyboard>
-                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
+                                                <Storyboard>
+                                                    <!--<ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)">
                                                         <EasingColorKeyFrame KeyTime="0" Value="Red" />
-                                                    </ColorAnimationUsingKeyFrames>
-                                                </Storyboard>-->
+                                                    </ColorAnimationUsingKeyFrames>-->
+                                                </Storyboard>
                                             </VisualState>
                                         </VisualStateGroup>
                                     </VisualStateManager.VisualStateGroups>
@@ -122,6 +127,23 @@
                     Width="*"
                     Binding="{Binding Name}"
                     Header="Name" />
+                <DataGridTemplateColumn Width="160">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                <ui:Button
+                                    Command="{Binding DataContext.OpenEditDialogCommand, ElementName=Root}"
+                                    CommandParameter="{Binding}"
+                                    Content="Edit" />
+                                <ui:Button
+                                    Margin="8,0,0,0"
+                                    Command="{Binding DataContext.OpenDeleteDialogCommand, ElementName=Root}"
+                                    CommandParameter="{Binding}"
+                                    Content="Delete" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </ui:DataGrid.Columns>
         </ui:DataGrid>
     </StackPanel>

@@ -15,17 +15,14 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <StackPanel Orientation="Vertical">
+        <ui:Button Command="{Binding CounterIncrementCommand}" Content="Click" />
 
-        <ui:Button
-            Grid.Row="0"
-            Command="{Binding CounterIncrementCommand}"
-            Content="Click" />
+        <ui:TextBlock Margin="0,8,0,0" Text="{Binding Counter}" />
 
-        <ui:TextBlock Grid.Row="1" Text="{Binding Counter}" />
-    </Grid>
+        <ui:ContentDialog
+            Title="Content Dialog"
+            PrimaryButtonText="OK"
+            SecondaryButtonText="Cancel" />
+    </StackPanel>
 </Page>

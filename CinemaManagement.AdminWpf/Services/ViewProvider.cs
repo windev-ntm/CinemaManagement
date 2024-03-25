@@ -11,15 +11,15 @@ namespace CinemaManagement.AdminWpf.Services
 {
     public interface IViewProvider
     {
-        public FrameworkElement? GetView<T>() where T : class;
+        public FrameworkElement GetView<T>() where T : class;
 
-        public FrameworkElement? GetView(Type viewModelType);
+        public FrameworkElement GetView(Type viewModelType);
 
-        public FrameworkElement? GetViewAndUpdateContext(object viewModel);
+        public FrameworkElement GetView<T>(out T viewModel) where T : class;
 
-        public T? GetViewModel<T>() where T : class;
+        public T GetViewModel<T>() where T : class;
 
-        public object? GetViewModel(Type viewModelType);
+        public object GetViewModel(Type viewModelType);
     }
 
     public class ViewProvider : IViewProvider
@@ -31,7 +31,8 @@ namespace CinemaManagement.AdminWpf.Services
             [typeof(GenresViewModel)] = typeof(GenresPage),
             [typeof(SettingsViewModel)] = typeof(SettingsPage),
 
-            [typeof(AddGenreFormViewModel)] = typeof(GenreForm),
+            [typeof(EditGenreFormViewModel)] = typeof(EditGenreForm),
+            [typeof(AddGenreFormViewModel)] = typeof(AddGenreForm),
         };
 
         private readonly IServiceProvider _serviceProvider;
@@ -42,45 +43,53 @@ namespace CinemaManagement.AdminWpf.Services
         }
 
 
-        public FrameworkElement? GetView<T>() where T : class
+        public FrameworkElement GetView<T>() where T : class
         {
             if (!_viewMap.TryGetValue(typeof(T), out var viewType))
-                return null;
+                throw new InvalidOperationException("Input view model doesn't exist");
 
             if (!typeof(FrameworkElement).IsAssignableFrom(viewType))
-                throw new InvalidOperationException("The page should be a WPF element.");
+                throw new InvalidOperationException("Corresponding view should be a WPF element.");
 
-            return _serviceProvider.GetService(viewType) as FrameworkElement;
+
+            if (_serviceProvider.GetService(viewType) is not FrameworkElement view)
+                throw new InvalidOperationException("The view doesn't exist");
+
+            return view;
         }
 
-        public FrameworkElement? GetView(Type viewModelType)
+        public FrameworkElement GetView(Type viewModelType)
         {
             if (!_viewMap.TryGetValue(viewModelType, out var viewType))
-                return null;
+                throw new InvalidOperationException("The view doesn't exist");
 
             if (!typeof(FrameworkElement).IsAssignableFrom(viewType))
-                throw new InvalidOperationException("The page should be a WPF element.");
+                throw new InvalidOperationException("Corresponding view should be a WPF element.");
 
-            return _serviceProvider.GetService(viewType) as FrameworkElement;
+
+            if (_serviceProvider.GetService(viewType) is not FrameworkElement view)
+                throw new InvalidOperationException("The view doesn't exist");
+
+            return view;
         }
 
-        public T? GetViewModel<T>() where T : class
+        public T GetViewModel<T>() where T : class
         {
-            return _serviceProvider.GetService<T>();
+            return _serviceProvider.GetRequiredService<T>();
         }
 
-        public object? GetViewModel(Type viewModelType)
+        public object GetViewModel(Type viewModelType)
         {
-            return _serviceProvider.GetService(viewModelType);
+            return _serviceProvider.GetRequiredService(viewModelType);
         }
 
-        public FrameworkElement? GetViewAndUpdateContext(object viewModel)
+        public FrameworkElement GetView<T>(out T viewModel) where T : class
         {
-            var view = GetView(viewModel.GetType());
-            if (view is null)
-                return null;
+            var view = GetView<T>();
+            viewModel = (T)view.DataContext;
 
-            view.DataContext = viewModel;
+            if (viewModel is null)
+                throw new InvalidOperationException("The view doesn't have view model");
 
             return view;
         }

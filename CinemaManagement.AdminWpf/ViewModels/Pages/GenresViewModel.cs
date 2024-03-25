@@ -24,10 +24,6 @@ namespace CinemaManagement.AdminWpf.ViewModels.Pages
 
         private bool _isInitialized = false;
 
-        [ObservableProperty]
-        private string _testText = string.Empty;
-
-
         private readonly ObservableCollection<Genre> _genres = [];
         public ObservableCollection<Genre> Genres
         {
@@ -68,23 +64,88 @@ namespace CinemaManagement.AdminWpf.ViewModels.Pages
         }
 
         [RelayCommand]
-        private async Task ShowCreateDialog()
+        private async Task OpenCreateDialog()
         {
-            var cancelToken = new CancellationTokenSource();
+            var dialogView = _viewProvider
+                .GetView<AddGenreFormViewModel>(out var dialogViewModel);
 
-            var genreFormVM = _viewProvider.GetViewModel<AddGenreFormViewModel>()!;
-            genreFormVM.OnCreatedSuccessful += async () =>
+            dialogViewModel.OnCreatedSuccessful += async () =>
             {
                 _snackbarService.Show("Genres ", "New genre added", ControlAppearance.Success);
                 await LoadGenres();
             };
-            genreFormVM.OnCreatedFailed += async () =>
+            dialogViewModel.OnCreatedFailed += async () =>
             {
-                _snackbarService.Show("Genres", "Failed to add new genre", ControlAppearance.Caution);
+                _snackbarService.Show("Genres", "Failed to add new genre", ControlAppearance.Danger);
                 await LoadGenres();
             };
 
-            await _contentDialogService.ShowAsync(_viewProvider.GetViewAndUpdateContext(genreFormVM)!);
+            await _contentDialogService.ShowAsync(dialogView);
+        }
+
+        [RelayCommand]
+        private async Task OpenEditDialog(Genre genre)
+        {
+            var dialogView = _viewProvider
+                .GetView<EditGenreFormViewModel>(out var dialogViewModel);
+
+            dialogViewModel.SetData(genre);
+            dialogViewModel.OnCreatedSuccessful += async () =>
+            {
+                _snackbarService.Show("Genres ", "Genre updated", ControlAppearance.Success);
+                await LoadGenres();
+            };
+            dialogViewModel.OnCreatedFailed += async () =>
+            {
+                _snackbarService.Show("Genres", "Failed to update genre", ControlAppearance.Danger);
+                await LoadGenres();
+            };
+
+            await _contentDialogService.ShowAsync(dialogView);
+        }
+
+        [RelayCommand]
+        private async Task OpenDeleteDialog(Genre genre)
+        {
+            var res = await _contentDialogService.ShowSimpleDialogAsync(
+                new SimpleContentDialogCreateOptions
+                {
+                    Title = "Delete Genre",
+                    Content = $"Are you sure you want to delete {genre.Name}?",
+                    PrimaryButtonText = "Confirm",
+                    CloseButtonText = "Cancel"
+                }
+            );
+
+            if (res == ContentDialogResult.Primary)
+            {
+                string? error = null;
+                var deleteRes = await Task.Run(() =>
+                {
+                    try
+                    {
+                        return _genreService.DeleteGenre(genre.Id);
+                    }
+                    catch (Exception e)
+                    {
+                        error = e.Message;
+                        return false;
+                    }
+                });
+
+                error ??= "Failed to delete genre";
+
+                if (deleteRes)
+                {
+                    _snackbarService.Show("Genres", "Genre deleted", ControlAppearance.Success);
+                    await LoadGenres();
+                }
+                else
+                {
+                    _snackbarService.Show("Genres", error, ControlAppearance.Danger);
+                }
+
+            }
         }
     }
 }
