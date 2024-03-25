@@ -1,9 +1,7 @@
 ﻿using CinemaManagement.AdminWpf.ViewModels.Components;
 using CinemaManagement.AdminWpf.ViewModels.Pages;
-using CinemaManagement.AdminWpf.ViewModels.Windows;
 using CinemaManagement.AdminWpf.Views.Components;
 using CinemaManagement.AdminWpf.Views.Pages;
-using CinemaManagement.AdminWpf.Views.Windows;
 using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
 
@@ -11,6 +9,7 @@ namespace CinemaManagement.AdminWpf.Services
 {
     public interface IViewProvider
     {
+        public Type GetViewType<T>() where T : class;
         public FrameworkElement GetView<T>() where T : class;
 
         public FrameworkElement GetView(Type viewModelType);
@@ -26,13 +25,14 @@ namespace CinemaManagement.AdminWpf.Services
     {
         private readonly Dictionary<Type, Type> _viewMap = new()
         {
-            [typeof(MainViewModel)] = typeof(MainWindow),
             [typeof(DashboardViewModel)] = typeof(DashboardPage),
             [typeof(GenresViewModel)] = typeof(GenresPage),
             [typeof(SettingsViewModel)] = typeof(SettingsPage),
+            [typeof(MoviesViewModel)] = typeof(MoviesPage),
 
             [typeof(EditGenreFormViewModel)] = typeof(EditGenreForm),
             [typeof(AddGenreFormViewModel)] = typeof(AddGenreForm),
+            [typeof(AddMovieFormViewModel)] = typeof(AddMovieForm),
         };
 
         private readonly IServiceProvider _serviceProvider;
@@ -42,15 +42,19 @@ namespace CinemaManagement.AdminWpf.Services
             _serviceProvider = serviceProvider;
         }
 
+        public Type GetViewType<T>() where T : class
+        {
+            if (!_viewMap.TryGetValue(typeof(T), out var viewType))
+                throw new InvalidOperationException("Input view model doesn't exist");
+
+            return viewType;
+        }
+
 
         public FrameworkElement GetView<T>() where T : class
         {
             if (!_viewMap.TryGetValue(typeof(T), out var viewType))
                 throw new InvalidOperationException("Input view model doesn't exist");
-
-            if (!typeof(FrameworkElement).IsAssignableFrom(viewType))
-                throw new InvalidOperationException("Corresponding view should be a WPF element.");
-
 
             if (_serviceProvider.GetService(viewType) is not FrameworkElement view)
                 throw new InvalidOperationException("The view doesn't exist");
@@ -62,10 +66,6 @@ namespace CinemaManagement.AdminWpf.Services
         {
             if (!_viewMap.TryGetValue(viewModelType, out var viewType))
                 throw new InvalidOperationException("The view doesn't exist");
-
-            if (!typeof(FrameworkElement).IsAssignableFrom(viewType))
-                throw new InvalidOperationException("Corresponding view should be a WPF element.");
-
 
             if (_serviceProvider.GetService(viewType) is not FrameworkElement view)
                 throw new InvalidOperationException("The view doesn't exist");

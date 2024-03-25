@@ -47,6 +47,7 @@ namespace CinemaManagement.AdminWpf
 
                 // Data services
                 services.AddSingleton<GenreService>();
+                services.AddSingleton<MovieService>();
 
                 // Main window with navigation
                 services.AddSingleton<MainViewModel>();
@@ -59,6 +60,8 @@ namespace CinemaManagement.AdminWpf
                 services.AddSingleton<GenresPage>();
                 services.AddSingleton<SettingsViewModel>();
                 services.AddSingleton<SettingsPage>();
+                services.AddSingleton<MoviesViewModel>();
+                services.AddSingleton<MoviesPage>();
 
                 // Other pages
                 services.AddTransientFromNamespace(

@@ -37,36 +37,38 @@
             IsReadOnly="True"
             ItemsSource="{Binding Genres}">
             <ui:DataGrid.ColumnHeaderStyle>
-                <Style BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}" TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="Padding" Value="10" />
-                    <Setter Property="FontWeight" Value="SemiBold" />
-                    <Setter Property="Foreground" Value="{ui:ThemeResource TextFillColorPrimaryBrush}" />
-                    <Setter Property="Background" Value="{ui:ThemeResource ControlFillColorDefaultBrush}" />
-                    <Setter Property="SeparatorVisibility" Value="Collapsed" />
+                <Style BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}"
+                       TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Padding"
+                            Value="10" />
+                    <Setter Property="FontWeight"
+                            Value="SemiBold" />
+                    <Setter Property="Foreground"
+                            Value="{ui:ThemeResource TextFillColorPrimaryBrush}" />
+                    <Setter Property="Background"
+                            Value="{ui:ThemeResource ControlFillColorDefaultBrush}" />
+                    <Setter Property="SeparatorVisibility"
+                            Value="Collapsed" />
                     <!--#region Template copied from source-->
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
                                 <Grid>
-                                    <Border
-                                        x:Name="columnHeaderBorder"
-                                        Padding="{TemplateBinding Padding}"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="0,0,0,2">
-                                        <ContentPresenter
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    <Border x:Name="columnHeaderBorder"
+                                            Padding="{TemplateBinding Padding}"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="0,0,0,2">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                     </Border>
-                                    <Thumb
-                                        x:Name="PART_LeftHeaderGripper"
-                                        HorizontalAlignment="Left"
-                                        Style="{StaticResource ColumnHeaderGripperStyle}" />
-                                    <Thumb
-                                        x:Name="PART_RightHeaderGripper"
-                                        HorizontalAlignment="Right"
-                                        Style="{StaticResource ColumnHeaderGripperStyle}" />
+                                    <Thumb x:Name="PART_LeftHeaderGripper"
+                                           HorizontalAlignment="Left"
+                                           Style="{StaticResource ColumnHeaderGripperStyle}" />
+                                    <Thumb x:Name="PART_RightHeaderGripper"
+                                           HorizontalAlignment="Right"
+                                           Style="{StaticResource ColumnHeaderGripperStyle}" />
 
                                 </Grid>
                             </ControlTemplate>
@@ -75,7 +77,6 @@
                     <!--#endregion Template copied from source-->
                 </Style>
             </ui:DataGrid.ColumnHeaderStyle>
-
             <ui:DataGrid.CellStyle>
                 <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
                     <Setter Property="Padding" Value="10" />

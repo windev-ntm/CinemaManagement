@@ -1,0 +1,100 @@
+﻿<Page
+    x:Class="CinemaManagement.AdminWpf.Views.Components.AddMovieForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CinemaManagement.AdminWpf.Views.Components"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:vms="clr-namespace:CinemaManagement.AdminWpf.ViewModels.Components"
+    x:Name="Root"
+    Title="AddMovieForm"
+    d:DataContext="{d:DesignInstance Type=vms:AddMovieFormViewModel,
+                                     IsDesignTimeCreatable=False}"
+    d:DesignHeight="800"
+    d:DesignWidth="800"
+    ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+    ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    ui:NavigationView.HeaderContent="Add"
+    Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+    mc:Ignorable="d">
+
+    <StackPanel Orientation="Vertical">
+
+        <Label Content="Name" />
+        <TextBox Text="{Binding Name}" />
+
+        <Label Margin="0,12,0,0" Content="Duration (in mintues)" />
+        <ui:NumberBox
+            Icon="{ui:SymbolIcon NumberSymbolSquare24}"
+            MaxDecimalPlaces="0"
+            Minimum="0"
+            SmallChange="1"
+            Value="{Binding DurationMinutes}" />
+
+        <Label Margin="0,12,0,0" Content="Published year" />
+        <ui:NumberBox
+            Icon="{ui:SymbolIcon NumberSymbolSquare24}"
+            MaxDecimalPlaces="0"
+            Minimum="0"
+            SmallChange="1"
+            Value="{Binding PublishedYear}" />
+
+        <Label Margin="0,12,0,0" Content="IMDB rating" />
+        <ui:NumberBox
+            Icon="{ui:SymbolIcon NumberSymbolSquare24}"
+            MaxDecimalPlaces="1"
+            Maximum="10"
+            Minimum="0"
+            SmallChange="0.1"
+            Value="{Binding ImdbRating}" />
+
+        <Label Margin="0,12,0,0" Content="Poster images URL" />
+        <ui:TextBox Icon="{ui:SymbolIcon Globe24}" Text="{Binding PosterImg}" />
+        <Grid Margin="0,12,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Rectangle
+                    Width="100"
+                    Height="100"
+                    Fill="{ui:ThemeResource AccentTextFillColorPrimaryBrush}" />
+                <ui:Image
+                    x:Name="image"
+                    Height="100"
+                    Source="{Binding UrlToLoad}" />
+            </Grid>
+            <ui:Button
+                Grid.Column="2"
+                Width="40"
+                Height="40"
+                Margin="12,0,0,0"
+                Padding="1"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                Command="{Binding LoadPosterImageCommand}"
+                CornerRadius="100"
+                Icon="{ui:SymbolIcon ArrowClockwise24}" />
+
+        </Grid>
+
+        <StackPanel
+            Margin="0,24,0,0"
+            HorizontalAlignment="Center"
+            Orientation="Horizontal">
+            <ui:Button
+                Width="80"
+                Appearance="Primary"
+                Command="{Binding CreateCommand}"
+                Content="Add" />
+            <ui:Button
+                Width="80"
+                Margin="12,0,0,0"
+                Command="{Binding CancelCommand}"
+                Content="Cancel" />
+        </StackPanel>
+    </StackPanel>
+</Page>

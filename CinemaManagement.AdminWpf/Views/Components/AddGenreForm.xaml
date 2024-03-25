@@ -26,6 +26,6 @@
         ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
         Orientation="Vertical">
         <Label Content="Name" />
-        <TextBox Text="{Binding GenreName}" />
+        <TextBox Text="{Binding GenreName, UpdateSourceTrigger=PropertyChanged}" />
     </StackPanel>
 </ui:ContentDialog>

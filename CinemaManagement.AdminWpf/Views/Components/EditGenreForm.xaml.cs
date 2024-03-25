@@ -8,7 +8,10 @@ namespace CinemaManagement.AdminWpf.Views.Components
     /// </summary>
     public partial class EditGenreForm : ContentDialog
     {
-        public EditGenreFormViewModel ViewModel { get => (EditGenreFormViewModel)DataContext; }
+        public EditGenreFormViewModel ViewModel
+        {
+            get => (EditGenreFormViewModel)DataContext;
+        }
 
         public EditGenreForm(EditGenreFormViewModel viewModel)
         {
