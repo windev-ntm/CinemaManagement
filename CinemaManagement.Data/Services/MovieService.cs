@@ -1,5 +1,6 @@
 ﻿using CinemaManagement.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace CinemaManagement.Data.Services
 {
@@ -25,12 +26,13 @@ namespace CinemaManagement.Data.Services
             }
 
             return query
+                .Include(m => m.Certification)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
         }
 
-        public int GetTotalPages(int pageSize, string searchText)
+        public int GetTotalMovies(int pageSize, string searchText)
         {
             using var context = new CinemaManagementContext();
             var query = context.Movies.AsNoTracking().AsQueryable();
@@ -41,6 +43,47 @@ namespace CinemaManagement.Data.Services
             }
 
             return (int)Math.Ceiling((double)query.Count() / pageSize);
+        }
+
+        public List<Genre> GetGenresOfMovie(int movieId)
+        {
+            using var context = new CinemaManagementContext();
+            return context.Movies.AsNoTracking()
+                .Where(m => m.Id == movieId)
+                .SelectMany(m => m.Genres)
+                .ToList();
+        }
+
+        public bool AddMovie(Movie movie, List<Genre> genres)
+        {
+            try
+            {
+                using var context = new CinemaManagementContext();
+
+                ICollection<Genre> collection = new List<Genre>();
+
+                foreach (var genre in genres)
+                {
+                    collection.Add(context.Genres.FirstOrDefault(g => g.Id == genre.Id));
+                }
+
+                movie.Genres = collection;
+                context.Movies.Add(movie);
+
+                return context.SaveChanges() > 0;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return false;
+            }
+
+        }
+
+        public List<MovieCertification> GetAllCertifications()
+        {
+            using var context = new CinemaManagementContext();
+            return context.MovieCertifications.AsNoTracking().ToList();
         }
     }
 }

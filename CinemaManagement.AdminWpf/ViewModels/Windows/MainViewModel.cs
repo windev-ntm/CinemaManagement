@@ -11,5 +11,8 @@ namespace CinemaManagement.AdminWpf.ViewModels.Windows
     {
         [ObservableProperty]
         private string _applicationTitle = "Cinema Management - Admin";
+
+        [ObservableProperty]
+        private bool _isSignedIn = false;
     }
 }

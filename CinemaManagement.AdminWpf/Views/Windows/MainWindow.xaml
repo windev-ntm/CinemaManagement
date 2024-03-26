@@ -25,6 +25,26 @@
 
     <Grid>
         <ui:NavigationView
+            x:Name="SignInNavigation"
+            BreadcrumbBar="{Binding ElementName=SingInBreadcrumbBar}"
+            FrameMargin="1"
+            IsPaneToggleVisible="False"
+            IsPaneVisible="False"
+            OpenPaneLength="0"
+            TitleBar="{Binding ElementName=TitleBar}">
+            <ui:NavigationView.Header>
+                <StackPanel Margin="42,32,42,20">
+                    <ui:BreadcrumbBar x:Name="SingInBreadcrumbBar" />
+                </StackPanel>
+            </ui:NavigationView.Header>
+            <ui:NavigationView.ContentOverlay>
+                <Grid>
+                    <ui:SnackbarPresenter x:Name="SignInSnackbarPresenter" />
+                </Grid>
+            </ui:NavigationView.ContentOverlay>
+        </ui:NavigationView>
+
+        <ui:NavigationView
             x:Name="RootNavigation"
             Padding="42,0,42,32"
             BreadcrumbBar="{Binding ElementName=BreadcrumbBar}"
@@ -61,6 +81,11 @@
                 <ui:NavigationViewItem Content="Genres" TargetPageType="{x:Type pages:GenresPage}">
                     <ui:NavigationViewItem.Icon>
                         <ui:SymbolIcon Symbol="AppsList24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="People" TargetPageType="{x:Type pages:PeoplePage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="People24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>

@@ -19,10 +19,6 @@
     Foreground="{DynamicResource TextFillColorPrimaryBrush}"
     mc:Ignorable="d">
 
-    <Page.Resources>
-        <helpers:ObjectToBooleanConverter x:Key="ObjectToBooleanConverter" />
-    </Page.Resources>
-
     <StackPanel Orientation="Vertical">
         <ui:Button
             Appearance="Primary"
@@ -73,9 +69,13 @@
                     Margin="8,0"
                     Padding="2"
                     VerticalAlignment="Center">
-                    <Run d:Text="3" Text="{Binding CorrectCurrentPage, Mode=OneWay}" />
+                    <Run
+                        d:Text="3"
+                        Text="{Binding CorrectCurrentPage, Mode=OneWay}" />
                     <Run Text=" / " />
-                    <Run d:Text="10" Text="{Binding TotalPages, Mode=OneWay}" />
+                    <Run
+                        d:Text="10"
+                        Text="{Binding TotalPages, Mode=OneWay}" />
                 </ui:TextBlock>
                 <ui:Button
                     Grid.Column="3"
@@ -112,7 +112,9 @@
             IsReadOnly="True"
             ItemsSource="{Binding Movies}">
             <ui:DataGrid.ColumnHeaderStyle>
-                <Style BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}" TargetType="{x:Type DataGridColumnHeader}">
+                <Style
+                    BasedOn="{StaticResource DefaultDataGridColumnHeaderStyle}"
+                    TargetType="{x:Type DataGridColumnHeader}">
                     <Setter Property="Padding" Value="10" />
                     <Setter Property="FontWeight" Value="SemiBold" />
                     <Setter Property="Foreground" Value="{ui:ThemeResource TextFillColorPrimaryBrush}" />
@@ -152,7 +154,9 @@
             </ui:DataGrid.ColumnHeaderStyle>
 
             <ui:DataGrid.CellStyle>
-                <Style BasedOn="{StaticResource {x:Type DataGridCell}}" TargetType="{x:Type DataGridCell}">
+                <Style
+                    BasedOn="{StaticResource {x:Type DataGridCell}}"
+                    TargetType="{x:Type DataGridCell}">
                     <Setter Property="Padding" Value="10" />
                     <Setter Property="VerticalContentAlignment" Value="Center" />
                     <!--#region Tempalte copied from source-->
@@ -168,7 +172,9 @@
                                     BorderBrush="Transparent"
                                     BorderThickness="0"
                                     SnapsToDevicePixels="True">
-                                    <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                    <ContentPresenter
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                     <VisualStateManager.VisualStateGroups>
                                         <VisualStateGroup x:Name="FocusStates">
                                             <VisualState x:Name="Unfocused" />
@@ -194,7 +200,9 @@
             </ui:DataGrid.CellStyle>
 
             <ui:DataGrid.Columns>
-                <DataGridTemplateColumn Width="100" CanUserResize="False">
+                <DataGridTemplateColumn
+                    Width="100"
+                    CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <!--  TODO: Caching using bitmap  -->
                         <DataTemplate>
@@ -202,14 +210,18 @@
                                 Name="image"
                                 Height="100"
                                 CornerRadius="8"
-                                Source="{Binding PosterImg}" />
+                                Source="{Binding PosterImg, Converter={StaticResource EmptyImageToImageSourceConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Width="*" Header="Name">
+                <DataGridTemplateColumn
+                    Width="*"
+                    Header="Name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <ui:TextBlock Text="{Binding Name}" TextWrapping="Wrap" />
+                            <ui:TextBlock
+                                Text="{Binding Name}"
+                                TextWrapping="Wrap" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -232,9 +244,13 @@
                 <DataGridTemplateColumn Width="160">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal">
                                 <ui:Button Content="Edit" />
-                                <ui:Button Margin="8,0,0,0" Content="Delete" />
+                                <ui:Button
+                                    Margin="8,0,0,0"
+                                    Content="Delete" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

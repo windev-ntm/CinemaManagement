@@ -19,5 +19,28 @@ namespace CinemaManagement.AdminWpf.Helpers
 
             return dialogService.ShowAsync(trueDialog, cancellationToken: cancellationToken);
         }
+
+        public static Task<ContentDialogResult> ShowAsync(
+            this IContentDialogService dialogService,
+            object dialog,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            if (dialog is not ContentDialog trueDialog)
+            {
+                throw new ArgumentException("Dialog must be of type ContentDialog", nameof(dialog));
+            }
+
+            return dialogService.ShowAsync(trueDialog, cancellationToken: cancellationToken);
+        }
+
+        public static Task<ContentDialogResult> ShowAsync(
+            this IContentDialogService dialogService,
+            ContentDialog dialog,
+            CancellationToken cancellationToken = default(CancellationToken)
+        )
+        {
+            return dialogService.ShowAsync(dialog, cancellationToken: cancellationToken);
+        }
     }
 }

@@ -48,10 +48,15 @@ namespace CinemaManagement.AdminWpf
                 // Data services
                 services.AddSingleton<GenreService>();
                 services.AddSingleton<MovieService>();
+                services.AddSingleton<MoviePersonService>();
+                services.AddSingleton<AdminService>();
 
                 // Main window with navigation
                 services.AddSingleton<MainViewModel>();
                 services.AddSingleton<MainWindow>();
+
+                services.AddSingleton<SignInViewModel>();
+                services.AddSingleton<SignInPage>();
 
                 // Top-level pages
                 services.AddSingleton<DashboardViewModel>();
@@ -62,6 +67,8 @@ namespace CinemaManagement.AdminWpf
                 services.AddSingleton<SettingsPage>();
                 services.AddSingleton<MoviesViewModel>();
                 services.AddSingleton<MoviesPage>();
+                services.AddSingleton<PeopleViewModel>();
+                services.AddSingleton<PeoplePage>();
 
                 // Other pages
                 services.AddTransientFromNamespace(
@@ -97,7 +104,17 @@ namespace CinemaManagement.AdminWpf
 
             var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
-            mainWindow.Navigate(typeof(DashboardPage));
+
+            var navigationService = _host.Services.GetRequiredService<INavigationService>();
+            navigationService.Navigate(typeof(SignInPage));
+
+            var SignInViewModel = _host.Services.GetRequiredService<SignInViewModel>();
+            SignInViewModel.OnSignedIn += () =>
+            {
+                mainWindow.SetControlForMain();
+                //navigationService.Navigate(typeof(DashboardPage));
+                mainWindow.Navigate(typeof(DashboardPage));
+            };
         }
 
         /// <summary>

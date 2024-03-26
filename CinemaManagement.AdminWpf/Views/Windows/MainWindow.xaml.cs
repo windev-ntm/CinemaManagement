@@ -13,6 +13,9 @@ namespace CinemaManagement.AdminWpf.Views.Windows
 {
     public partial class MainWindow : INavigationWindow
     {
+        private readonly ISnackbarService _snackbarService;
+        private readonly INavigationService _navigationService;
+
         public MainWindow(
             MainViewModel viewModel,
             IPageService pageService,
@@ -21,15 +24,33 @@ namespace CinemaManagement.AdminWpf.Views.Windows
             ISnackbarService snackbarService
         )
         {
+            _snackbarService = snackbarService;
+            _navigationService = navigationService;
+
             SystemThemeWatcher.Watch(this);
 
             DataContext = viewModel;
 
             InitializeComponent();
-            snackbarService.SetSnackbarPresenter(SnackbarPresenter);
-            navigationService.SetNavigationControl(RootNavigation);
+            SetControlForSignIn();
             contentDialogService.SetContentPresenter(RootContentDialog);
             SetPageService(pageService);
+        }
+
+        public void SetControlForSignIn()
+        {
+            RootNavigation.Visibility = Visibility.Hidden;
+            SignInNavigation.Visibility = Visibility.Visible;
+            _snackbarService.SetSnackbarPresenter(SignInSnackbarPresenter);
+            _navigationService.SetNavigationControl(SignInNavigation);
+        }
+
+        public void SetControlForMain()
+        {
+            SignInNavigation.Visibility = Visibility.Collapsed;
+            RootNavigation.Visibility = Visibility.Visible;
+            _snackbarService.SetSnackbarPresenter(SnackbarPresenter);
+            _navigationService.SetNavigationControl(RootNavigation);
         }
 
         #region INavigationWindow methods
