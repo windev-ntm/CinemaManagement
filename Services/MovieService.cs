@@ -185,17 +185,27 @@ namespace CinemaManagement
         public List<string> GetDirectors(Movie movie)
         {
 
-            List<string> personList = movie.PersonInMovies
+            using var context = new CinemaManagementContext();
+            var personList = context.Movies
+                                        .Include(movie => movie.PersonInMovies)
+                                        .ThenInclude(personInMovie => personInMovie.Person)
+                                        .FirstOrDefault(movie => movie.Id == movie.Id)
+                                        .PersonInMovies
                                         .Where(p => p.Role == "Director")
-                                        .Select(p => cinemaManagementContext.People.FirstOrDefault(p1 => p1.Id == p.PersonId).Name)
+                                        .Select(p => p.Person.Name)
                                         .ToList();
             return personList;
         }
         public List<string> GetActors(Movie movie)
         {
-            List<string> personList = movie.PersonInMovies
+            using var  context = new CinemaManagementContext();
+            var personList = context.Movies
+                                        .Include(movie => movie.PersonInMovies)
+                                        .ThenInclude(personInMovie => personInMovie.Person)
+                                        .FirstOrDefault(movie => movie.Id == movie.Id)
+                                        .PersonInMovies
                                         .Where(p => p.Role == "Actor")
-                                        .Select(p => cinemaManagementContext.People.FirstOrDefault(p1 => p1.Id == p.PersonId).Name)
+                                        .Select(p => p.Person.Name)
                                         .ToList();
             return personList;
         }
