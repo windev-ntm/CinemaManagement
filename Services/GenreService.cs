@@ -8,7 +8,8 @@ namespace CinemaManagement.Services
 
         public async Task<List<Genre>> GetGenres()
         {
-            return await Task.Run(() => cinemaManagementContext.Genres.ToList());
+            using var context = new CinemaManagementContext();
+            return await Task.Run(() => context.Genres.ToList());
         }
     }
 }

@@ -16,7 +16,9 @@ namespace CinemaManagement.Services
 
         public async Task<List<Screening>> GetScreenings()
         {
-            return await Task.Run(() => cinemaManagementContext.Screenings.ToList());
+            using var context = new CinemaManagementContext();
+
+            return await Task.Run(() => context.Screenings.ToList());
         }
         public async Task<Screening> GetScreeningById(int id)
         {
