@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Security.RightsManagement;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -40,7 +41,7 @@ namespace CinemaManagement.ViewModel
         public string logoPath { get; set; }
         public string filmImage { get; set; }
 
-        private User user = null;
+        public User user { get; set; }
 
         private ObservableCollection<MovieView> _movieCollection;
 
@@ -68,6 +69,8 @@ namespace CinemaManagement.ViewModel
 
         public HomeViewModel()
         {
+            user = Global.user;
+
             findImage = "/Resources/find.png";
             logoPath = "/Resources/logo.png";
             filmImage = "/Resources/film1.jpg";

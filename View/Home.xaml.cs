@@ -42,6 +42,25 @@ namespace CinemaManagement.View
             DataContext = homeViewModel;
         }
 
+        private void AccountMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if(Global.user != null)
+            {
+                UpdateAccountInformationWindow newWindow = new UpdateAccountInformationWindow(1);
+                newWindow.Show();
+            }
+            else
+            {
+                MessageBox.Show("You need to login first");
+            }
+            
+        }
+
+        private void SignInMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Sign_in newWindow = new Sign_in();
+            newWindow.Show();
+        }
         public static string GetAbsoluteImagePath(Image image)
         {
             if (image == null || image.Source == null)

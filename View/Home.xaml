@@ -130,7 +130,8 @@
 
                 <MenuItem Padding="20,15" Header="Home" />
                 <MenuItem Padding="20,15" Header="Movies" Click="MoviesMenuItem_Click" />
-                <MenuItem Padding="20,15" Header="Customers" />
+                <MenuItem x:Name="SignIn" Padding="20,15" Header="Sign in"  Click="SignInMenuItem_Click"/>
+                <MenuItem x:Name="Account" Padding="20,15" Header="Account" Click="AccountMenuItem_Click"/>
                 <!-- Add more menu items for other sections as needed -->
             </Menu>
         </StackPanel>
