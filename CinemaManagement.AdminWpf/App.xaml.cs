@@ -50,6 +50,8 @@ namespace CinemaManagement.AdminWpf
                 services.AddSingleton<MovieService>();
                 services.AddSingleton<MoviePersonService>();
                 services.AddSingleton<AdminService>();
+                services.AddSingleton<UserService>();
+                services.AddSingleton<TicketService>();
 
                 // Main window with navigation
                 services.AddSingleton<MainViewModel>();

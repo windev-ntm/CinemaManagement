@@ -45,6 +45,12 @@ namespace CinemaManagement.Data.Services
             return (int)Math.Ceiling((double)query.Count() / pageSize);
         }
 
+        public int GetNumberOfMovies()
+        {
+            using var context = new CinemaManagementContext();
+            return context.Movies.Count();
+        }
+
         public List<Genre> GetGenresOfMovie(int movieId)
         {
             using var context = new CinemaManagementContext();

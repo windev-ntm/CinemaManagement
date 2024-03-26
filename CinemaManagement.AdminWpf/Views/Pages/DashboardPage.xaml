@@ -16,13 +16,88 @@
     mc:Ignorable="d">
 
     <StackPanel Orientation="Vertical">
-        <ui:Button Command="{Binding CounterIncrementCommand}" Content="Click" />
+        <UniformGrid Columns="3">
+            <Border
+                Margin="20"
+                Background="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                CornerRadius="10">
+                <StackPanel>
+                    <ui:TextBlock
+                        Padding="12"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="Total Movies" />
+                    <ui:TextBlock
+                        Margin="0,12,0,0"
+                        Padding="12"
+                        FontSize="20"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="{Binding NumberOfMovies, Mode=OneWay}" />
+                </StackPanel>
+            </Border>
 
-        <ui:TextBlock Margin="0,8,0,0" Text="{Binding Counter}" />
+            <Border
+                Margin="20"
+                Background="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                CornerRadius="10">
+                <StackPanel>
+                    <ui:TextBlock
+                        Padding="12"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="Total Users" />
+                    <ui:TextBlock
+                        Margin="0,12,0,0"
+                        Padding="12"
+                        FontSize="20"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="{Binding NumberOfUsers, Mode=OneWay}" />
+                </StackPanel>
+            </Border>
 
-        <ui:ContentDialog
-            Title="Content Dialog"
-            PrimaryButtonText="OK"
-            SecondaryButtonText="Cancel" />
+            <Border
+                Margin="20"
+                Background="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                CornerRadius="10">
+                <StackPanel>
+                    <ui:TextBlock
+                        Padding="12"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="Total Tickets Sold" />
+                    <ui:TextBlock
+                        Margin="0,12,0,0"
+                        Padding="12"
+                        FontSize="20"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="{Binding TotalTicketsSold, Mode=OneWay}" />
+                </StackPanel>
+            </Border>
+
+            <Border
+                Margin="20"
+                Background="{ui:ThemeResource TextFillColorPrimaryBrush}"
+                CornerRadius="10">
+                <StackPanel>
+                    <ui:TextBlock
+                        Padding="12"
+                        FontSize="20"
+                        FontWeight="Bold"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                        Text="Total Revenue" />
+                    <ui:TextBlock
+                        Margin="0,12,0,0"
+                        Padding="12"
+                        FontSize="20"
+                        Foreground="{ui:ThemeResource TextFillColorInverseBrush}">
+                        <Run Text="{Binding TotalRevenue, Mode=OneWay, StringFormat='{}{0:#,#.}'}" />
+                        <Run Text="VND" />
+                    </ui:TextBlock>
+                </StackPanel>
+            </Border>
+        </UniformGrid>
     </StackPanel>
 </Page>
