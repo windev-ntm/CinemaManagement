@@ -46,7 +46,7 @@ namespace CinemaManagement.View
         {
             if(Global.user != null)
             {
-                UpdateAccountInformationWindow newWindow = new UpdateAccountInformationWindow(1);
+                UpdateAccountInformationWindow newWindow = new UpdateAccountInformationWindow(Global.user.Id);
                 newWindow.Show();
             }
             else

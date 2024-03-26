@@ -26,7 +26,7 @@ namespace CinemaManagement.View
         public UpdateAccountInformationWindow(int v)
         {
             InitializeComponent();
-            updateAccountViewModel = new ViewModel.UpdateAccountViewModel(1);
+            updateAccountViewModel = new ViewModel.UpdateAccountViewModel(Global.user.Id);
             DataContext = updateAccountViewModel;
             //TicketListView.ItemsSource = updateAccountViewModel.Tickets;
         }

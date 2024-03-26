@@ -80,6 +80,7 @@ namespace CinemaManagement.Services
 
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                user.BirthDate = DecreaseDate(user.BirthDate);
                 user.BirthDate = user.BirthDate.Value.ToUniversalTime();
 
 
@@ -128,6 +129,31 @@ namespace CinemaManagement.Services
             }
             return true;
         }
+
+        public static DateTime? DecreaseDate(DateTime? originalDate)
+        {
+            if (originalDate.HasValue)
+            {
+                // Giảm một ngày từ originalDate
+                DateTime decreasedDate = originalDate.Value.AddDays(-1);
+
+                // Đảm bảo rằng decreasedDate không vượt quá ngày hiện tại
+                if (decreasedDate > DateTime.Now)
+                {
+                    // Nếu decreasedDate lớn hơn ngày hiện tại, giảm thêm một ngày nữa
+                    decreasedDate = DateTime.Now.AddDays(-1);
+                }
+
+                return decreasedDate;
+            }
+            else
+            {
+                // Trả về null nếu originalDate là null
+                return null;
+            }
+        }
+
+
         static public bool updateUser(User user)
         {
             try
