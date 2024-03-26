@@ -28,7 +28,7 @@ namespace CinemaManagement
 
         public SearchViewModel(User user)
         {
-            this.user = user;
+            this.user = Global.user;
             _currentPage = 1;
             _enableBackButton = true;
             _enableNextButton = true;

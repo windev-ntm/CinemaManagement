@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using CinemaManagement.ViewModel;
+using System.Windows;
 using System.Windows.Controls;
 namespace CinemaManagement.View
 {
@@ -7,11 +8,15 @@ namespace CinemaManagement.View
     /// </summary>
     public partial class Sign_in : Window
     {
+        public SignInViewModel signInViewModel { get; set; }
         public Sign_in()
         {
             InitializeComponent();
 
-            DataContext = new CinemaManagement.ViewModel.SignInViewModel();
+            signInViewModel = new SignInViewModel(this);
+            DataContext = signInViewModel;
+            if (signInViewModel.CloseAction == null)
+                signInViewModel.CloseAction = new System.Action(this.Close);
 
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)

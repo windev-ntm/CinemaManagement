@@ -71,13 +71,13 @@ namespace CinemaManagement.ViewModel
     }
     class MovieDetailViewModel : INotifyPropertyChanged
     {
-        private User user=null;
+        private User user;
         private Movie movie;
         private MovieService movieService;
 
         public MovieDetailViewModel(Movie movie, User user)
         {
-            this.user = user;
+            this.user = Global.user;
             this.movie = movie;
             this.movieService = new MovieService();
             this.movie= movie;
@@ -129,13 +129,13 @@ namespace CinemaManagement.ViewModel
             if (selectedScreening != null)
             {
 
-                if(user==null)
+                if(this.user==null)
                 {
                     MessageBox.Show("Please sign in to buy ticket");
                     return;
                 }
                 BuyTicketView buyTicketView = new BuyTicketView();
-                BuyTicketViewModel buyTicketViewModel = new BuyTicketViewModel(movie, selectedScreening, user);
+                BuyTicketViewModel buyTicketViewModel = new BuyTicketViewModel(movie, selectedScreening, this.user);
                 buyTicketView.DataContext = buyTicketViewModel;
                 buyTicketView.ShowDialog();
                 movie = await movieService.GetMovieById(movie.Id);

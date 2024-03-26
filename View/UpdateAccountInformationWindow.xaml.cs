@@ -23,10 +23,10 @@ namespace CinemaManagement.View
     public partial class UpdateAccountInformationWindow : Window
     {
         UpdateAccountViewModel updateAccountViewModel;
-        public UpdateAccountInformationWindow(int userId)
+        public UpdateAccountInformationWindow(int v)
         {
             InitializeComponent();
-            updateAccountViewModel = new ViewModel.UpdateAccountViewModel(userId);
+            updateAccountViewModel = new ViewModel.UpdateAccountViewModel(1);
             DataContext = updateAccountViewModel;
             //TicketListView.ItemsSource = updateAccountViewModel.Tickets;
         }

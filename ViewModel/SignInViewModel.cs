@@ -17,10 +17,15 @@ namespace CinemaManagement.ViewModel
         private ICommand _signInCommand, _signUpCommand;
 
         public string logoPath { get; set; }
+        public Action CloseAction { get; set; }
+        private Window window;
 
+        private string _username;
+        private string _password;
 
-        public SignInViewModel()
+        public SignInViewModel(Window window)
         {
+            this.window = window;
             user = new User();
             userService = new UserService();
         }
@@ -50,54 +55,41 @@ namespace CinemaManagement.ViewModel
             }
         }
 
-        private async Task HandleSignInButton()
+        private void HandleSignInButton()
         {
-            user = await userService.SignIn(user.Username, user.Password);
+            User user = userService.SignIn(_username, _password);
             if(user != null)
             {
-                Home home = new Home();
-                HomeViewModel homeViewModel = new HomeViewModel();
-                home.DataContext = homeViewModel;
-
-
-                WindowHome windowHome = new WindowHome(home);
-
-                if (home != null)
-                {
-                    windowHome.Show();
-                    Application.Current.MainWindow.Close(); // Đối với cửa sổ chính của ứng dụng
-                    Application.Current.MainWindow = windowHome;
-                }
+                this.window.Close();
             }
         }
 
         private void HandleSignUpButton()
         {
+            this.window.Close();
+
             SignUp signUp = new SignUp();
 
             signUp.Show();
 
-            Application.Current.MainWindow.Close(); // Đối với cửa sổ chính của ứng dụng
-
-            Application.Current.MainWindow = signUp;
         }
 
 
         public string Username
         {
-            get => user.Username;
+            get => _username;
             set
             {
-                user.Username = value;
+                _username = value;
                 OnPropertyChanged(nameof(Username));
             }
         }
         public string Password
         {
-            get => user.Password;
+            get => _password;
             set
             {
-                user.Password = value;
+                _password = value;
                 OnPropertyChanged(nameof(Password));
             }
         }

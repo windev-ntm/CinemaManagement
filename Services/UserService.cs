@@ -12,7 +12,7 @@ namespace CinemaManagement.Services
 
         static CinemaManagementContext cinemaManagementContext = new CinemaManagementContext();
 
-        public async Task<User> SignIn(string username, string password)
+        public User SignIn(string username, string password)
         {
             try
             {

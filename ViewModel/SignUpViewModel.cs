@@ -13,9 +13,10 @@ namespace CinemaManagement.ViewModel
         private User user;
         private ICommand _signInCommand, _signUpCommand;
 
-
-                public SignUpViewModel()
+        private Window window;
+                public SignUpViewModel(Window window)
         {
+            this.window = window;
             user = new User();
             userService = new UserService();
             Gender = null;
@@ -108,13 +109,11 @@ namespace CinemaManagement.ViewModel
 
         private void HandleSignInButton()
         {
+            window.Close();
             Sign_in signIn = new Sign_in();
 
             signIn.Show();
 
-            Application.Current.MainWindow.Close(); // Đối với cửa sổ chính của ứng dụng
-
-            Application.Current.MainWindow = signIn;
         }
         private void HandleSignUpButton()
         {

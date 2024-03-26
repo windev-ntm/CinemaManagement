@@ -11,7 +11,7 @@ namespace CinemaManagement.View
         public SignUp()
         {
             InitializeComponent();
-            DataContext = new CinemaManagement.ViewModel.SignUpViewModel();
+            DataContext = new CinemaManagement.ViewModel.SignUpViewModel(this);
         }
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
