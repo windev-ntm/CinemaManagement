@@ -237,8 +237,7 @@ namespace CinemaManagement.View
 
         private void MoviesMenuItem_Click(object sender, RoutedEventArgs e)
         {
-            Search newWindow = new Search();
-            newWindow.Show();
+            homeViewModel.MoviesClick();
         }
 
         private void usercontrol_loaded(object sender, RoutedEventArgs e)

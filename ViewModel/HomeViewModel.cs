@@ -40,6 +40,8 @@ namespace CinemaManagement.ViewModel
         public string logoPath { get; set; }
         public string filmImage { get; set; }
 
+        private User user = null;
+
         private ObservableCollection<MovieView> _movieCollection;
 
         CommunityToolkit.Mvvm.Input.RelayCommand MoviesClickCommand { get; set; }
@@ -116,9 +118,11 @@ namespace CinemaManagement.ViewModel
             });
         }
 
-        private void MoviesClick()
+        public void MoviesClick()
         {
             Search searchWindow = new Search();
+            SearchViewModel searchViewModel = new SearchViewModel(user);
+            searchWindow.DataContext = searchViewModel;
             searchWindow.Show();
         }
     }
