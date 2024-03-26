@@ -20,7 +20,9 @@ namespace CinemaManagement.View
         {
             // Thực hiện logic để phát video ở đây
             // Ví dụ: Bạn có thể set Source cho MediaElement và sau đó gọi Play
-            mediaPlayer.Source = new Uri("D:/Downloads/demo.mp4");
+
+            string curDirectory = Global.getCurDirectoryOfProject();
+            mediaPlayer.Source = new Uri(System.IO.Path.Combine(curDirectory, "Resources/trailer1.mp4"));
             mediaPlayer.Play();
             playButton.Visibility = Visibility.Hidden;
             playButtonText.Visibility = Visibility.Hidden;
