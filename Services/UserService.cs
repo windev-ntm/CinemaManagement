@@ -1,4 +1,5 @@
 ﻿using CinemaManagement.Models;
+using CinemaManagement.ViewModel;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
@@ -35,6 +36,7 @@ namespace CinemaManagement.Services
                         MessageBox.Show("Password is incorrect");
                         return null;
                     }
+                    Global.user = user;
                     return user;
                 }
             }
