@@ -16,6 +16,9 @@ namespace CinemaManagement.Services
         {
             try
             {
+
+
+
                 if (username == null || password == null)
                 {
                     MessageBox.Show("Username or password is empty");
@@ -75,7 +78,6 @@ namespace CinemaManagement.Services
                     return false;
                 }
 
-                MessageBox.Show(user.Gender);
 
                 user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
                 user.BirthDate = user.BirthDate.Value.ToUniversalTime();

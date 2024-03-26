@@ -400,7 +400,6 @@ namespace CinemaManagement.ViewModel
                     else
                     {
                         VoucherList[i].IsSelected = false;
-                        MessageBox.Show("You need to spend more to use this voucher");
                     }
                 }
             }
@@ -590,11 +589,7 @@ namespace CinemaManagement.ViewModel
             Invoice invoice = await movieService.BuyTicket(allSelectedSeats, screening, user, (int) Total, (int) PricePerTicket);
             
             
-            Screening screeningRefresh = await screeningService.GetScreeningById(screening.Id);
-        ScreeningInfo screeningInfoRefresh = new ScreeningInfo(screeningRefresh, screeningInfo.Duration);
-        screeningInfo = screeningInfoRefresh;
 
-            InitComponents(screeningInfoRefresh);
 
         IsBuyButtonEnable = true;
             
@@ -620,7 +615,14 @@ namespace CinemaManagement.ViewModel
             Information information = new Information(invoiceId, username, movieName, date, startTime, screeningName, bookSeat, subTotal, discount, total);
         
             InvoiceView invoiceView = new InvoiceView(information);
-        invoiceView.ShowDialog();
+
+            Screening screeningRefresh = await screeningService.GetScreeningById(screening.Id);
+            ScreeningInfo screeningInfoRefresh = new ScreeningInfo(screeningRefresh, screeningInfo.Duration);
+            screeningInfo = screeningInfoRefresh;
+
+            InitComponents(screeningInfoRefresh);
+
+            invoiceView.ShowDialog();
         }
 
         public TicketInfo SelectedSeat

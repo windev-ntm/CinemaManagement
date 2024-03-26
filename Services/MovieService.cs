@@ -274,7 +274,7 @@ namespace CinemaManagement
 
         public async Task<List<Voucher>> GetVouchers()
         {
-            using var context = cinemaManagementContext;
+            using var context = new CinemaManagementContext();
             var result = await context.Vouchers.ToListAsync();
             return result;
         }
