@@ -124,14 +124,87 @@ namespace CinemaManagement.Services
             }
             return true;
         }
-        public bool updateUser()
+        static public bool updateUser(User user)
         {
+            try
+            {
+                if (user.Password != null)
+                {
+                    Regex regexPassword = new Regex(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()-_+=])[A-Za-z\d!@#$%^&*()-_+=]{8,}$");
+
+                    if (!regexPassword.IsMatch(user.Password))
+                    {
+                        MessageBox.Show("Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character.");
+                        return false;
+                    }
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                }
+
+
+                if (user.BirthDate == null)
+                {
+                    MessageBox.Show("Birthdate is empty");
+                    return false;
+                }
+                if (user.Gender == null)
+                {
+                    MessageBox.Show("Gender is empty");
+                    return false;
+                }
+
+                user.BirthDate = user.BirthDate.Value.ToUniversalTime().AddDays(1);
+
+                using (var db = new CinemaManagementContext())
+                {
+                    var userToUpdate = db.Users.FirstOrDefault(u => u.Username == user.Username);
+
+                    if (userToUpdate != null)
+                    {
+                        if (user.Password != null)
+                        {
+                            userToUpdate.Password = user.Password;
+                        }
+
+                        userToUpdate.BirthDate = user.BirthDate;
+                        userToUpdate.Gender = user.Gender;
+                    }
+
+                    db.SaveChanges();
+
+                }
+                MessageBox.Show("Update successfully");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
             return true;
         }
         public bool deleteUser()
         {
             return true;
         }
+        static public User getUserById(int id)
+        {
+            try
+            {
+                User resultUser = null;
+                using (var db = cinemaManagementContext)
+                {
+                    resultUser = db.Users.Where(u => u.Id == id).FirstOrDefault();
+                    return resultUser;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+
+
+        }
+
         public User getUserById(string id)
         {
             return null;

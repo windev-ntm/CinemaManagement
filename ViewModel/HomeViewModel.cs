@@ -1,4 +1,5 @@
 ﻿using CinemaManagement.Models;
+using CinemaManagement.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +16,7 @@ namespace CinemaManagement.ViewModel
     {
         public string visibility { get; set; } = "Visible";
         public string NameTrailer { get; set; }
+
         RelayCommand VisibilityChangedCommand { get; set; } = new RelayCommand(VisibilityChanged);
 
         RelayCommand ImageMouseEnterCommand { get; set; } = new RelayCommand(ImageMouseEnter);
@@ -40,6 +42,8 @@ namespace CinemaManagement.ViewModel
 
         private ObservableCollection<MovieView> _movieCollection;
 
+        CommunityToolkit.Mvvm.Input.RelayCommand MoviesClickCommand { get; set; }
+
         public MovieView selectedMovie { get; set; }
 
         public ObservableCollection<MovieView> MovieCollection
@@ -62,10 +66,12 @@ namespace CinemaManagement.ViewModel
 
         public HomeViewModel()
         {
-            findImage = Directory.GetCurrentDirectory() + "\\find.png";
-            logoPath = Directory.GetCurrentDirectory() + "\\logo.png";
-            filmImage = Directory.GetCurrentDirectory() + "\\film1.jpg";
-            trailerVideo = Directory.GetCurrentDirectory() + "\\trailer1.mp4";
+            findImage = "/Resources/find.png";
+            logoPath = "/Resources/logo.png";
+            filmImage = "/Resources/film1.jpg";
+            trailerVideo = "/Resources/trailer1.mp4";
+
+            MoviesClickCommand = new CommunityToolkit.Mvvm.Input.RelayCommand(MoviesClick);
 
             MovieCollection = new ObservableCollection<MovieView>();
             MovieCollection.Add(new MovieView
@@ -73,9 +79,9 @@ namespace CinemaManagement.ViewModel
                 Name = "The Shawshank Redemption",
                 PublishedYear = 1994,
                 ImdbRating = 9.3f,
-                PosterImg = Directory.GetCurrentDirectory() + "\\film1.jpg",
+                PosterImg = "/Resources/film1.jpg",
                 Duration = new TimeSpan(2, 22, 0),
-                Trailer = Directory.GetCurrentDirectory() + "\\trailer1.mp4",
+                Trailer = "/Resources/trailer1.mp4",
                 NameTrailer="Trailer1"
             });
             MovieCollection.Add(new MovieView
@@ -83,9 +89,9 @@ namespace CinemaManagement.ViewModel
                 Name = "The Godfather",
                 PublishedYear = 1991,
                 ImdbRating = 9.3f,
-                PosterImg = Directory.GetCurrentDirectory() + "\\film2.jpg",
+                PosterImg = "/Resources/film2.jpg",
                 Duration = new TimeSpan(2, 05, 0),
-                Trailer = Directory.GetCurrentDirectory() + "\\trailer1.mp4",
+                Trailer = "/Resourcestrailer1.mp4",
                 NameTrailer = "Trailer2"
             });
             MovieCollection.Add(new MovieView
@@ -93,9 +99,9 @@ namespace CinemaManagement.ViewModel
                 Name = "The Dark Knight",
                 PublishedYear = 1992,
                 ImdbRating = 9.3f,
-                PosterImg = Directory.GetCurrentDirectory() + "\\film3.jpg",
+                PosterImg = "/Resources/film3.jpg",
                 Duration = new TimeSpan(1, 56, 0),
-                Trailer = Directory.GetCurrentDirectory() + "\\trailer1.mp4",
+                Trailer = "/Resources/trailer1.mp4",
                 NameTrailer = "Trailer3"
             });
             MovieCollection.Add(new MovieView
@@ -103,11 +109,17 @@ namespace CinemaManagement.ViewModel
                 Name = "The Lord of the Rings: The Return of the King",
                 PublishedYear = 1992,
                 ImdbRating = 9.3f,
-                PosterImg = Directory.GetCurrentDirectory() + "\\film4.jpg",
+                PosterImg = "/Resources/film4.jpg",
                 Duration = new TimeSpan(1, 12, 5),
-                Trailer = Directory.GetCurrentDirectory() + "\\trailer1.mp4",
+                Trailer = "/Resources/trailer1.mp4",
                 NameTrailer = "Trailer4"
             });
+        }
+
+        private void MoviesClick()
+        {
+            Search searchWindow = new Search();
+            searchWindow.Show();
         }
     }
 }
