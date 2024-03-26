@@ -88,6 +88,11 @@
                         <ui:SymbolIcon Symbol="People24" />
                     </ui:NavigationViewItem.Icon>
                 </ui:NavigationViewItem>
+                <ui:NavigationViewItem Content="Report" TargetPageType="{x:Type pages:ReportPage}">
+                    <ui:NavigationViewItem.Icon>
+                        <ui:SymbolIcon Symbol="DocumentData24" />
+                    </ui:NavigationViewItem.Icon>
+                </ui:NavigationViewItem>
             </ui:NavigationView.MenuItems>
 
             <ui:NavigationView.FooterMenuItems>

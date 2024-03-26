@@ -52,6 +52,7 @@ namespace CinemaManagement.AdminWpf
                 services.AddSingleton<AdminService>();
                 services.AddSingleton<UserService>();
                 services.AddSingleton<TicketService>();
+                services.AddSingleton<ScreeningService>();
 
                 // Main window with navigation
                 services.AddSingleton<MainViewModel>();
@@ -71,6 +72,8 @@ namespace CinemaManagement.AdminWpf
                 services.AddSingleton<MoviesPage>();
                 services.AddSingleton<PeopleViewModel>();
                 services.AddSingleton<PeoplePage>();
+                services.AddSingleton<ReportViewModel>();
+                services.AddSingleton<ReportPage>();
 
                 // Other pages
                 services.AddTransientFromNamespace(

@@ -91,5 +91,14 @@ namespace CinemaManagement.Data.Services
             using var context = new CinemaManagementContext();
             return context.MovieCertifications.AsNoTracking().ToList();
         }
+
+        public Movie? FindMovie(string searchText = default)
+        {
+            using var context = new CinemaManagementContext();
+
+            return context.Movies
+                .Where(m => EF.Functions.ILike(m.Name, $"%{searchText}%"))
+                .FirstOrDefault();
+        }
     }
 }

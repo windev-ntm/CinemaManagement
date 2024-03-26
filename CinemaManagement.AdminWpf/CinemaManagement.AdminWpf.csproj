@@ -48,6 +48,9 @@
     <Compile Update="Views\Components\AddPersonForm.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Pages\ReportPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\Pages\SignInPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
