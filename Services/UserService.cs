@@ -220,7 +220,7 @@ namespace CinemaManagement.Services
             try
             {
                 User resultUser = null;
-                using (var db = cinemaManagementContext)
+                using (var db = new CinemaManagementContext())
                 {
                     resultUser = db.Users.Where(u => u.Id == id).FirstOrDefault();
                     return resultUser;
