@@ -55,14 +55,18 @@ namespace CinemaManagement.ViewModel
             user = await userService.SignIn(user.Username, user.Password);
             if(user != null)
             {
-                Search search = new Search();
-                SearchViewModel searchViewModel = new SearchViewModel(user);
-                search.DataContext = searchViewModel;
-                if (search != null)
+                Home home = new Home();
+                HomeViewModel homeViewModel = new HomeViewModel();
+                home.DataContext = homeViewModel;
+
+
+                WindowHome windowHome = new WindowHome(home);
+
+                if (home != null)
                 {
-                    search.Show();
+                    windowHome.Show();
                     Application.Current.MainWindow.Close(); // Đối với cửa sổ chính của ứng dụng
-                    Application.Current.MainWindow = search;
+                    Application.Current.MainWindow = windowHome;
                 }
             }
         }

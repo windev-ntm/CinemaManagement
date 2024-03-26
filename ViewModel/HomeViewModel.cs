@@ -121,9 +121,11 @@ namespace CinemaManagement.ViewModel
             });
         }
 
-        private void MoviesClick()
+        public void MoviesClick()
         {
             Search searchWindow = new Search();
+            SearchViewModel searchViewModel = new SearchViewModel(user);
+            searchWindow.DataContext = searchViewModel;
             searchWindow.Show();
         }
     }
