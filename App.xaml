@@ -5,14 +5,10 @@
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-             StartupUri="View/Sign_in.xaml">
+             StartupUri="View/Home.xaml">
     <Application.Resources>
-            <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ui:ThemesDictionary Theme="Dark" />
-                    <ui:ControlsDictionary />
-                </ResourceDictionary.MergedDictionaries>
-        <ControlTemplate x:Key="validationTemplate">
+        <ResourceDictionary>
+            <ControlTemplate x:Key="validationTemplate">
             <StackPanel Orientation="Horizontal">
                 <TextBlock Foreground="Red" FontSize="20" Text="!">
                     

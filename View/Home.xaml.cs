@@ -94,7 +94,7 @@ namespace CinemaManagement.View
             Debug.WriteLine("XYZ");
 
             Debug.WriteLine(homeViewModel.selectedMovie);
-            if (image != null && selectedItem != null && CompareDirectoryPaths(pathImage, selectedItem.PosterImg))
+            if (image != null && selectedItem != null && pathImage.IndexOf(selectedItem.PosterImg) > 0)
             {
                 var scaleTransform = new ScaleTransform(1.2, 1.2, 0.5, 0.5);
                 image.RenderTransform = scaleTransform;
@@ -102,8 +102,53 @@ namespace CinemaManagement.View
                 //image.Visibility = Visibility.Collapsed;
                 //grid.Children.Remove(image);
 
+                DirectoryInfo parentDirectory = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory);
+                String curDirectory = "";
+                
+                if (parentDirectory != null)
+                {
+                    // Get the parent directory of the parent directory
+                    DirectoryInfo grandParentDirectory = Directory.GetParent(parentDirectory.FullName);
+
+                    if (grandParentDirectory != null)
+                    {
+                        // Get the parent directory of the grandparent directory
+                        DirectoryInfo greatGrandParentDirectory = Directory.GetParent(grandParentDirectory.FullName);
+
+                        if (greatGrandParentDirectory != null)
+                        {
+                            // Get the parent directory of the great-grandparent directory
+                            DirectoryInfo greatGreatGrandParentDirectory = Directory.GetParent(greatGrandParentDirectory.FullName);
+
+                            if (greatGreatGrandParentDirectory != null)
+                            {
+                                curDirectory = greatGreatGrandParentDirectory.FullName;
+                                Debug.WriteLine("Great-great-grandparent directory: " + curDirectory);
+                            }
+                            else
+                            {
+                                Debug.WriteLine("No great-great-grandparent directory found.");
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("No great-grandparent directory found.");
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("No grandparent directory found.");
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("No parent directory found.");
+                }
+
+
+
                 MediaElement videoElement = new MediaElement();
-                videoElement.Source = new Uri(Directory.GetCurrentDirectory() + "\\trailer1.mp4");
+                videoElement.Source = new Uri(System.IO.Path.Combine(curDirectory, "Resources/trailer1.mp4"));
                 videoElement.VerticalAlignment = VerticalAlignment.Center;
                 videoElement.HorizontalAlignment = HorizontalAlignment.Center;
                 videoElement.Width = image.RenderSize.Width;
@@ -190,6 +235,11 @@ namespace CinemaManagement.View
             }
         }
 
+        private void MoviesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Search newWindow = new Search();
+            newWindow.Show();
+        }
 
         private void usercontrol_loaded(object sender, RoutedEventArgs e)
         {
@@ -217,6 +267,9 @@ namespace CinemaManagement.View
             _carousel1.RotateLeft();
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

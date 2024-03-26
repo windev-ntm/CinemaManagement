@@ -128,9 +128,9 @@
                     </Style>
                 </Menu.Resources>
 
-                <MenuItem Padding="20,15" Header="_Home" />
-                <MenuItem Padding="20,15" Header="_Movies" />
-                <MenuItem Padding="20,15" Header="_Customers" />
+                <MenuItem Padding="20,15" Header="Home" />
+                <MenuItem Padding="20,15" Header="Movies" Click="MoviesMenuItem_Click" />
+                <MenuItem Padding="20,15" Header="Customers" />
                 <!-- Add more menu items for other sections as needed -->
             </Menu>
         </StackPanel>
